@@ -1,0 +1,1468 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="Pool_ES_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Pool_ES_files/libs/quarto-html/tabby.min.js"></script>
+<script src="Pool_ES_files/libs/quarto-html/popper.min.js"></script>
+<script src="Pool_ES_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="Pool_ES_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Pool_ES_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="Pool_ES_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="Pool_ES_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<meta name="shinylive:serviceworker_dir" content=".">
+<script src="Pool_ES_files/libs/quarto-contrib/shinylive-0.5.0/shinylive/load-shinylive-sw.js" type="module"></script>
+<script src="Pool_ES_files/libs/quarto-contrib/shinylive-0.5.0/shinylive/run-python-blocks.js" type="module"></script>
+<link href="Pool_ES_files/libs/quarto-contrib/shinylive-0.5.0/shinylive/shinylive.css" rel="stylesheet">
+<link href="Pool_ES_files/libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.5.57">
+
+  <title>cours_effect_size</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="Pool_ES_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="Pool_ES_files/libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="Pool_ES_files/libs/revealjs/dist/theme/quarto.css">
+  <link href="Pool_ES_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="Pool_ES_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="Pool_ES_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="Pool_ES_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="Pool_ES_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="Pool_ES_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+
+  .callout {
+    margin-top: 1em;
+    margin-bottom: 1em;  
+    border-radius: .25rem;
+  }
+
+  .callout.callout-style-simple { 
+    padding: 0em 0.5em;
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+    display: flex;
+  }
+
+  .callout.callout-style-default {
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+  }
+
+  .callout .callout-body-container {
+    flex-grow: 1;
+  }
+
+  .callout.callout-style-simple .callout-body {
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-style-default .callout-body {
+    font-size: 0.9rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-titled.callout-style-simple .callout-body {
+    margin-top: 0.2em;
+  }
+
+  .callout:not(.callout-titled) .callout-body {
+      display: flex;
+  }
+
+  .callout:not(.no-icon).callout-titled.callout-style-simple .callout-content {
+    padding-left: 1.6em;
+  }
+
+  .callout.callout-titled .callout-header {
+    padding-top: 0.2em;
+    margin-bottom: -0.2em;
+  }
+
+  .callout.callout-titled .callout-title  p {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+    
+  .callout.callout-titled.callout-style-simple .callout-content  p {
+    margin-top: 0;
+  }
+
+  .callout.callout-titled.callout-style-default .callout-content  p {
+    margin-top: 0.7em;
+  }
+
+  .callout.callout-style-simple div.callout-title {
+    border-bottom: none;
+    font-size: .9rem;
+    font-weight: 600;
+    opacity: 75%;
+  }
+
+  .callout.callout-style-default  div.callout-title {
+    border-bottom: none;
+    font-weight: 600;
+    opacity: 85%;
+    font-size: 0.9rem;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-default div.callout-content {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-simple .callout-icon::before {
+    height: 1rem;
+    width: 1rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 1rem 1rem;
+  }
+
+  .callout.callout-style-default .callout-icon::before {
+    height: 0.9rem;
+    width: 0.9rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 0.9rem 0.9rem;
+  }
+
+  .callout-title {
+    display: flex
+  }
+    
+  .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  .callout.no-icon::before {
+    display: none !important;
+  }
+
+  .callout.callout-titled .callout-body > .callout-content > :last-child {
+    padding-bottom: 0.5rem;
+    margin-bottom: 0;
+  }
+
+  .callout.callout-titled .callout-icon::before {
+    margin-top: .5rem;
+    padding-right: .5rem;
+  }
+
+  .callout:not(.callout-titled) .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  /* Callout Types */
+
+  div.callout-note {
+    border-left-color: #4582ec !important;
+  }
+
+  div.callout-note .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEU0lEQVRYCcVXTWhcVRQ+586kSUMMxkyaElstCto2SIhitS5Ek8xUKV2poatCcVHtUlFQk8mbaaziwpWgglJwVaquitBOfhQXFlqlzSJpFSpIYyXNjBNiTCck7x2/8/LeNDOZxDuEkgOXe++553zfefee+/OYLOXFk3+1LLrRdiO81yNqZ6K9cG0P3MeFaMIQjXssE8Z1JzLO9ls20MBZX7oG8w9GxB0goaPrW5aNMp1yOZIa7Wv6o2ykpLtmAPs/vrG14Z+6d4jpbSKuhdcSyq9wGMPXjonwmESXrriLzFGOdDBLB8Y6MNYBu0dRokSygMA/mrun8MGFN3behm6VVAwg4WR3i6FvYK1T7MHo9BK7ydH+1uurECoouk5MPRyVSBrBHMYwVobG2aOXM07sWrn5qgB60rc6mcwIDJtQrnrEr44kmy+UO9r0u9O5/YbkS9juQckLed3DyW2XV/qWBBB3ptvI8EUY3I9p/67OW+g967TNr3Sotn3IuVlfMLVnsBwH4fsnebJvyGm5GeIUA3jljERmrv49SizPYuq+z7c2H/jlGC+Ghhupn/hcapqmcudB9jwJ/3jvnvu6vu5lVzF1fXyZuZZ7U8nRmVzytvT+H3kilYvH09mLWrQdwFSsFEsxFVs5fK7A0g8gMZjbif4ACpKbjv7gNGaD8bUrlk8x+KRflttr22JEMRUbTUwwDQScyzPgedQHZT0xnx7ujw2jfVfExwYHwOsDTjLdJ2ebmeQIlJ7neo41s/DrsL3kl+W2lWvAga0tR3zueGr6GL78M3ifH0rGXrBC2aAR8uYcIA5gwV8zIE8onoh8u0Fca/ciF7j1uOzEnqcIm59sEXoGc0+z6+H45V1CvAvHcD7THztu669cnp+L0okAeIc6zjbM/24LgGM1gZk7jnRu1aQWoU9sfUOuhrmtaPIO3YY1KLLWZaEO5TKUbMY5zx8W9UJ6elpLwKXbsaZ4EFl7B4bMtDv0iRipKoDQT2sNQI9b1utXFdYisi+wzZ/ri/1m7QfDgEuvgUUEIJPq3DhX/5DWNqIXDOweC2wvIR90Oq3lDpdMIgD2r0dXvGdsEW5H6x6HLRJYU7C69VefO1x8Gde1ZFSJLfWS1jbCnhtOPxmpfv2LXOA2Xk2tvnwKKPFuZ/oRmwBwqRQDcKNeVQkYcOjtWVBuM/JuYw5b6isojIkYxyYAFn5K7ZBF10fea52y8QltAg6jnMqNHFBmGkQ1j+U43HMi2xMar1Nv0zGsf1s8nUsmUtPOOrbFIR8bHFDMB5zL13Gmr/kGlCkUzedTzzmzsaJXhYawnA3UmARpiYj5ooJZiUoxFRtK3X6pgNPv+IZVPcnwbOl6f+aBaO1CNvPW9n9LmCp01nuSaTRF2YxHqZ8DYQT6WsXT+RD6eUztwYLZ8rM+rcPxamv1VQzFUkzFXvkiVrySGQgJNvXHJAxiU3/NwiC03rSf05VBaPtu/Z7/B8Yn/w7eguloAAAAAElFTkSuQmCC');
+  }
+
+  div.callout-note.callout-style-default .callout-title {
+    background-color: #dae6fb
+  }
+
+  div.callout-important {
+    border-left-color: #d9534f !important;
+  }
+
+  div.callout-important .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEKklEQVRYCcVXTWhcVRS+575MJym48A+hSRFr00ySRQhURRfd2HYjk2SSTokuBCkU2o0LoSKKraKIBTcuFCoidGFD08nkBzdREbpQ1EDNIv8qSGMFUboImMSZd4/f9zJv8ibJMC8xJQfO3HPPPef7zrvvvnvviIkpC9nsw0UttFunbUhpFzFtarSd6WJkStVMw5xyVqYTvkwfzuf/5FgtkVoB0729j1rjXwThS7Vio+Mo6DNnvLfahoZ+i/o32lULuJ3NNiz7q6+pyAUkJaFF6JwaM2lUJlV0MlnQn5aTRbEu0SEqHUa0A4AdiGuB1kFXRfVyg5d87+Dg4DL6m2TLAub60ilj7A1Ec4odSAc8X95sHh7+ZRPCFo6Fnp7HfU/fBng/hi10CjCnWnJjsxvDNxWw0NfV6Rv5GgP3I3jGWXumdTD/3cbEOP2ZbOZp69yniG3FQ9z1jD7bnBu9Fc2tKGC2q+uAJOQHBDRiZX1x36o7fWBs7J9ownbtO+n0/qWkvW7UPIfc37WgT6ZGR++EOJyeQDSb9UB+DZ1G6DdLDzyS+b/kBCYGsYgJbSQHuThGKRcw5xdeQf8YdNHsc6ePXrlSYMBuSIAFTGAtQo+VuALo4BX83N190NWZWbynBjhOHsmNfFWLeL6v+ynsA58zDvvAC8j5PkbOcXCMg2PZFk3q8MjI7WAG/Dp9AwP7jdGBOOQkAvlFUB+irtm16I1Zw9YBcpGTGXYmk3kQIC/Cds55l+iMI3jqhjAuaoe+am2Jw5GT3Nbz3CkE12NavmzN5+erJW7046n/CH1RO/RVa8lBLozXk9uqykkGAyRXLWlLv5jyp4RFsG5vGVzpDLnIjTWgnRy2Rr+tDKvRc7Y8AyZq10jj8DqXdnIRNtFZb+t/ZRtXcDiVnzpqx8mPcDWxgARUqx0W1QB9MeUZiNrV4qP+Ehc+BpNgATsTX8ozYKL2NtFYAHc84fG7ndxUPr+AR/iQSns7uSUufAymwDOb2+NjK27lEFocm/EE2WpyIy/Hi66MWuMKJn8RvxIcj87IM5Vh9663ziW36kR0HNenXuxmfaD8JC7tfKbrhFr7LiZCrMjrzTeGx+PmkosrkNzW94ObzwocJ7A1HokLolY+AvkTiD/q1H0cN48c5EL8Crkttsa/AXQVDmutfyku0E7jShx49XqV3MFK8IryDhYVbj7Sj2P2eBxwcXoe8T8idsKKPRcnZw1b+slFTubwUwhktrfnAt7J++jwQtLZcm3sr9LQrjRzz6cfMv9aLvgmnAGvpoaGLxM4mAEaLV7iAzQ3oU0IvD5x9ix3yF2RAAuYAOO2f7PEFWCXZ4C9Pb2UsgDeVnFSpbFK7/IWu7TPTvBqzbGdCHOJQSxiEjt6IyZmxQyEJHv6xyQsYk//moVFsN2zP6fRImjfq7/n/wFDguUQFNEwugAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-important.callout-style-default .callout-title {
+    background-color: #f7dddc
+  }
+
+  div.callout-warning {
+    border-left-color: #f0ad4e !important;
+  }
+
+  div.callout-warning .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAETklEQVRYCeVWW2gcVRg+58yaTUnizqbipZeX4uWhBEniBaoUX1Ioze52t7sRq6APio9V9MEaoWlVsFasRq0gltaAPuxms8lu0gcviE/FFOstVbSIxgcv6SU7EZqmdc7v9+9mJtNks51NTUH84ed889/PP+cmxP+d5FIbMJmNbpREu4WUkiTtCicKny0l1pIKmBzovF2S+hIJHX8iEu3hZJ5lNZGqyRrGSIQpq15AzF28jgpeY6yk6GVdrfFqdrD6Iw+QlB8g0YS2g7dyQmXM/IDhBhT0UCiRf59lfqmmDvzRt6kByV/m4JjtzuaujMUM2c5Z2d6JdKrRb3K2q6mA+oYVz8JnDdKPmmNthzkAk/lN63sYPgevrguc72aZX/L9C6x09GYyxBgCX4NlvyGUHOKELlm5rXeR1kchuChJt4SSwyddZRXgvwMGvYo4QSlk3/zkHD8UHxwVJA6zjZZqP8v8kK8OWLnIZtLyCAJagYC4rTGW/9Pqj92N/c+LUaAj27movwbi19tk/whRCIE7Q9vyI6yvRpftAKVTdUjOW40X3h5OXsKCdmFcx0xlLJoSuQngnrJe7Kcjm4OMq9FlC7CMmScQANuNvjfP3PjGXDBaUQmbp296S5L4DrpbrHN1T87ZVEZVCzg1FF0Ft+dKrlLukI+/c9ENo+TvlTDbYFvuKPtQ9+l052rXrgKoWkDAFnvh0wTOmYn8R5f4k/jN/fZiCM1tQx9jQQ4ANhqG4hiL0qIFTGViG9DKB7GYzgubnpofgYRwO+DFjh0Zin2m4b/97EDkXkc+f6xYAPX0KK2I/7fUQuwzuwo/L3AkcjugPNixC8cHf0FyPjWlItmLxWw4Ou9YsQCr5fijMGoD/zpdRy95HRysyXA74MWOnscpO4j2y3HAVisw85hX5+AFBRSHt4ShfLFkIMXTqyKFc46xdzQM6XbAi702a7sy04J0+feReMFKp5q9esYLCqAZYw/k14E/xcLLsFElaornTuJB0svMuJINy8xkIYuL+xPAlWRceH6+HX7THJ0djLUom46zREu7tTkxwmf/FdOZ/sh6Q8qvEAiHpm4PJ4a/doJe0gH1t+aHRgCzOvBvJedEK5OFE5jpm4AGP2a8Dxe3gGJ/pAutug9Gp6he92CsSsWBaEcxGx0FHytmIpuqGkOpldqNYQK8cSoXvd+xLxXADw0kf6UkJNFtdo5MOgaLjiQOQHcn+A6h5NuL2s0qsC2LOM75PcF3yr5STuBSAcGG+meA14K/CI21HcS4LBT6tv0QAh8Dr5l93AhZzG5ZJ4VxAqdZUEl9z7WJ4aN+svMvwHHL21UKTd1mqvChH7/Za5xzXBBKrUcB0TQ+Ulgkfbi/H/YT5EptrGzsEK7tR1B7ln9BBwckYfMiuSqklSznIuoIIOM42MQO+QnduCoFCI0bpkzjCjddHPN/F+2Yu+sd9bKNpVwHhbS3LluK/0zgfwD0xYI5dXuzlQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-warning.callout-style-default .callout-title {
+    background-color: #fcefdc
+  }
+
+  div.callout-tip {
+    border-left-color: #02b875 !important;
+  }
+
+  div.callout-tip .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAADr0lEQVRYCe1XTWgTQRj9ZjZV8a9SPIkKgj8I1bMHsUWrqYLVg4Ue6v9BwZOxSYsIerFao7UiUryIqJcqgtpimhbBXoSCVxUFe9CTiogUrUp2Pt+3aUI2u5vdNh4dmMzOzHvvezuz8xNFM0mjnbXaNu1MvFWRXkXEyE6aYOYJpdW4IXuA4r0fo8qqSMDBU0v1HJUgVieAXxzCsdE/YJTdFcVIZQNMyhruOMJKXYFoLfIfIvVIMWdsrd+Rpd86ZmyzzjJmLStqRn0v8lzkb4rVIXvnpScOJuAn2ACC65FkPzEdEy4TPWRLJ2h7z4cArXzzaOdKlbOvKKX25Wl00jSnrwVxAg3o4dRxhO13RBSdNvH0xSARv3adTXbBdTf64IWO2vH0LT+cv4GR1DJt+DUItaQogeBX/chhbTBxEiZ6gftlDNXTrvT7co4ub5A6gp9HIcHvzTa46OS5fBeP87Qm0fQkr4FsYgVQ7Qg+ZayaDg9jhg1GkWj8RG6lkeSacrrHgDaxdoBiZPg+NXV/KifMuB6//JmYH4CntVEHy/keA6x4h4CU5oFy8GzrBS18cLJMXcljAKB6INjWsRcuZBWVaS3GDrqB7rdapVIeA+isQ57Eev9eCqzqOa81CY05VLd6SamW2wA2H3SiTbnbSxmzfp7WtKZkqy4mdyAlGx7ennghYf8voqp9cLSgKdqNfa6RdRsAAkPwRuJZNbpByn+RrJi1RXTwdi8RQF6ymDwGMAtZ6TVE+4uoKh+MYkcLsT0Hk8eAienbiGdjJHZTpmNjlbFJNKDVAp2fJlYju6IreQxQ08UJDNYdoLSl6AadO+fFuCQqVMB1NJwPm69T04Wv5WhfcWyfXQB+wXRs1pt+nCknRa0LVzSA/2B+a9+zQJadb7IyyV24YAxKp2Jqs3emZTuNnKxsah+uabKbMk7CbTgJx/zIgQYErIeTKRQ9yD9wxVof5YolPHqaWo7TD6tJlh7jQnK5z2n3+fGdggIOx2kaa2YI9QWarc5Ce1ipNWMKeSG4DysFF52KBmTNMmn5HqCFkwy34rDg05gDwgH3bBi+sgFhN/e8QvRn8kbamCOhgrZ9GJhFDgfcMHzFb6BAtjKpFhzTjwv1KCVuxHvCbsSiEz4CANnj84cwHdFXAbAOJ4LTSAawGWFn5tDhLMYz6nWeU2wJfIhmIJBefcd/A5FWQWGgrWzyORZ3Q6HuV+Jf0Bj+BTX69fm1zWgK7By1YTXchFDORywnfQ7GpzOo6S+qECrsx2ifVQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-tip.callout-style-default .callout-title {
+    background-color: #ccf1e3
+  }
+
+  div.callout-caution {
+    border-left-color: #fd7e14 !important;
+  }
+
+  div.callout-caution .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAACV0lEQVRYCdVWzWoUQRCuqp2ICBLJXgITZL1EfQDBW/bkzUMUD7klD+ATSHBEfAIfQO+iXsWDxJsHL96EHAwhgzlkg8nBg25XWb0zIb0zs9muYYWkoKeru+vn664fBqElyZNuyh167NXJ8Ut8McjbmEraKHkd7uAnAFku+VWdb3reSmRV8PKSLfZ0Gjn3a6Xlcq9YGb6tADjn+lUfTXtVmaZ1KwBIvFI11rRXlWlatwIAAv2asaa9mlB9wwygiDX26qaw1yYPzFXg2N1GgG0FMF8Oj+VIx7E/03lHx8UhvYyNZLN7BwSPgekXXLribw7w5/c8EF+DBK5idvDVYtEEwMeYefjjLAdEyQ3M9nfOkgnPTEkYU+sxMq0BxNR6jExrAI31H1rzvLEfRIdgcv1XEdj6QTQAS2wtstEALLG1yEZ3QhH6oDX7ExBSFEkFINXH98NTrme5IOaaA7kIfiu2L8A3qhH9zRbukdCqdsA98TdElyeMe5BI8Rs2xHRIsoTSSVFfCFCWGPn9XHb4cdobRIWABNf0add9jakDjQJpJ1bTXOJXnnRXHRf+dNL1ZV1MBRCXhMbaHqGI1JkKIL7+i8uffuP6wVQAzO7+qVEbF6NbS0LJureYcWXUUhH66nLR5rYmva+2tjRFtojkM2aD76HEGAD3tPtKM309FJg5j/K682ywcWJ3PASCcycH/22u+Bh7Aa0ehM2Fu4z0SAE81HF9RkB21c5bEn4Dzw+/qNOyXr3DCTQDMBOdhi4nAgiFDGCinIa2owCEChUwD8qzd03PG+qdW/4fDzjUMcE1ZpIAAAAASUVORK5CYII=');
+  }
+
+  div.callout-caution.callout-style-default .callout-title {
+    background-color: #ffe5d0
+  }
+
+  </style>
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+  <style>
+  #title-slide .title {
+    font-size: 1.5em;
+    color: black;
+  }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" data-background-image="elephant.png" data-background-position="90% 80%" data-background-size="25%" class="quarto-title-block center">
+  <h1 class="title">cours_effect_size</h1>
+  <p class="subtitle">September 2024</p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Damien Beillouin <br> CIRAD-Hortsys 
+</div>
+</div>
+</div>
+
+</section>
+<section id="pooling-effect-sizes" class="slide level2 smaller">
+<h2>Pooling Effect Sizes</h2>
+<p>Pooling effect sizes is essential for synthesizing results across studies in meta-analysis. Different models can be employed based on the data structure and assumptions.</p>
+</section>
+<section id="fixed-effect-model" class="slide level2 smaller">
+<h2>Fixed-Effect Model</h2>
+<p>The <strong>Fixed-Effect Model</strong> assumes that all studies estimate the same underlying effect size.</p>
+<h3 id="key-features">Key Features:</h3>
+<ul>
+<li>Assumes homogeneity of effect sizes across studies.</li>
+<li>Only one common effect size is estimated.</li>
+</ul>
+<h3 id="formula">Formula:</h3>
+<p><span class="math display">\[
+\hat{\theta}_k = \theta + \varepsilon_k, \quad \varepsilon_k \sim \mathcal{N}(0, s_k^2)
+\]</span></p>
+</section>
+<section id="fixed-effect-model-1" class="slide level2 smaller">
+<h2>Fixed-Effect Model</h2>
+<h3 id="weighting">Weighting:</h3>
+<p><span class="math display">\[
+\bar{\theta}_w = \frac{\sum_{i=1}^{k} w_i \hat{\theta}_i}{\sum_{i=1}^{k} w_i}
+\]</span></p>
+<p>Where:</p>
+<ul>
+<li><p>bar_theta_w is the <strong>weighted average effect size</strong> across ( k ) studies.</p></li>
+<li><p>hat_theta_i is the <strong>estimated effect size</strong> for the ( i )-th study.</p></li>
+<li><p>w_i is the <strong>weight</strong> for the ( i )-th study, calculated as ( w_i = ).</p></li>
+<li><p>v_i is the <strong>variance</strong> of the ( i )-th study.</p>
+<p>and with weights equal to 𝑤𝑖=1/𝑣𝑖</p></li>
+</ul>
+</section>
+<section id="fixed-effect-model-2" class="slide level2 smaller">
+<h2>Fixed-Effect Model</h2>
+<p>Let’s say: trueRR=1.5; and <span class="math display">\[\hat{\theta}_k = \theta + \varepsilon_k\]</span></p>
+<div class="sourceCode" id="cb1" data-engine="r"><pre class="sourceCode numberSource shinylive-r number-lines code-with-copy"><code class="sourceCode"><span id="cb1-1"><a href=""></a>#| standalone: true</span>
+<span id="cb1-2"><a href=""></a>#| viewerHeight: 600</span>
+<span id="cb1-3"><a href=""></a># Load necessary libraries</span>
+<span id="cb1-4"><a href=""></a>library(shiny)</span>
+<span id="cb1-5"><a href=""></a>library(metafor)</span>
+<span id="cb1-6"><a href=""></a>library(ggplot2)</span>
+<span id="cb1-7"><a href=""></a>library(truncnorm)</span>
+<span id="cb1-8"><a href=""></a></span>
+<span id="cb1-9"><a href=""></a># Define UI</span>
+<span id="cb1-10"><a href=""></a>ui &lt;- fluidPage(</span>
+<span id="cb1-11"><a href=""></a>  titlePanel("Forest Plot with Fixed Effect Model"),</span>
+<span id="cb1-12"><a href=""></a>  </span>
+<span id="cb1-13"><a href=""></a>  sidebarLayout(</span>
+<span id="cb1-14"><a href=""></a>    sidebarPanel(</span>
+<span id="cb1-15"><a href=""></a>      sliderInput("sd_true", "Standard Deviation of True Effect Size:",</span>
+<span id="cb1-16"><a href=""></a>                  min = 0, max = 1, value = 0.05, step = 0.01),</span>
+<span id="cb1-17"><a href=""></a>      sliderInput("sd_sampling", "Standard Deviation of Sampling Error:",</span>
+<span id="cb1-18"><a href=""></a>                  min = 0, max = 1, value = 0.2, step = 0.01),</span>
+<span id="cb1-19"><a href=""></a>      sliderInput("n_studies", "Number of Studies:",</span>
+<span id="cb1-20"><a href=""></a>                  min = 1, max = 100, value = 5, step = 1)</span>
+<span id="cb1-21"><a href=""></a>    ),</span>
+<span id="cb1-22"><a href=""></a>    </span>
+<span id="cb1-23"><a href=""></a>    mainPanel(</span>
+<span id="cb1-24"><a href=""></a>      plotOutput("forestPlot")</span>
+<span id="cb1-25"><a href=""></a>    )</span>
+<span id="cb1-26"><a href=""></a>  )</span>
+<span id="cb1-27"><a href=""></a>)</span>
+<span id="cb1-28"><a href=""></a></span>
+<span id="cb1-29"><a href=""></a># Define server logic</span>
+<span id="cb1-30"><a href=""></a>server &lt;- function(input, output) {</span>
+<span id="cb1-31"><a href=""></a>  </span>
+<span id="cb1-32"><a href=""></a>  output$forestPlot &lt;- renderPlot({</span>
+<span id="cb1-33"><a href=""></a>    # Set parameters</span>
+<span id="cb1-34"><a href=""></a>    set.seed(113)  # For reproducibility</span>
+<span id="cb1-35"><a href=""></a>    true_effect_size &lt;- 1.5  # Specify a true effect size (e.g., ratio)</span>
+<span id="cb1-36"><a href=""></a>    sd_true &lt;- input$sd_true</span>
+<span id="cb1-37"><a href=""></a>    sd_sampling &lt;- input$sd_sampling</span>
+<span id="cb1-38"><a href=""></a>    n_studies &lt;- input$n_studies</span>
+<span id="cb1-39"><a href=""></a>    sample_sizes &lt;- sample(20:100, n_studies)  # Random sample sizes for each study</span>
+<span id="cb1-40"><a href=""></a></span>
+<span id="cb1-41"><a href=""></a>    # Generate studies data</span>
+<span id="cb1-42"><a href=""></a>    studies &lt;- data.frame(</span>
+<span id="cb1-43"><a href=""></a>      study = paste("Study", 1:n_studies),</span>
+<span id="cb1-44"><a href=""></a>      n = sample_sizes</span>
+<span id="cb1-45"><a href=""></a>    )</span>
+<span id="cb1-46"><a href=""></a>    </span>
+<span id="cb1-47"><a href=""></a>    # Generate random effect sizes with associated sampling error</span>
+<span id="cb1-48"><a href=""></a>    studies$mean_ratio &lt;- true_effect_size+rnorm(n_studies, mean = 0, sd = sd_sampling)</span>
+<span id="cb1-49"><a href=""></a>    </span>
+<span id="cb1-50"><a href=""></a>    # Generate standard errors from a truncated normal distribution</span>
+<span id="cb1-51"><a href=""></a>    studies$se &lt;- rtruncnorm(n_studies, a = 0, mean = 0.2, sd = 0.1)</span>
+<span id="cb1-52"><a href=""></a>    </span>
+<span id="cb1-53"><a href=""></a>    # Calculate confidence intervals</span>
+<span id="cb1-54"><a href=""></a>    studies$ci_lower &lt;- studies$mean_ratio - 1.96 * studies$se</span>
+<span id="cb1-55"><a href=""></a>    studies$ci_upper &lt;- studies$mean_ratio + 1.96 * studies$se</span>
+<span id="cb1-56"><a href=""></a>    studies$color = 2</span>
+<span id="cb1-57"><a href=""></a>    </span>
+<span id="cb1-58"><a href=""></a>    # Calculate mean and CI for the overall effect size using a fixed-effects model</span>
+<span id="cb1-59"><a href=""></a>    fixed_effect &lt;- rma(yi = mean_ratio, sei = se, method = "FE",data=studies)</span>
+<span id="cb1-60"><a href=""></a>     fixed_effectUN &lt;- rma(yi = mean_ratio, sei = se, method = "FE",weighted=FALSE,data=studies)</span>
+<span id="cb1-61"><a href=""></a>    </span>
+<span id="cb1-62"><a href=""></a>     # Extract relevant information from the fixed_effect object</span>
+<span id="cb1-63"><a href=""></a>    summary_table &lt;- data.frame(</span>
+<span id="cb1-64"><a href=""></a>      study = "Overall_weighted",</span>
+<span id="cb1-65"><a href=""></a>      n = NA,</span>
+<span id="cb1-66"><a href=""></a>      mean_ratio = fixed_effect$b,</span>
+<span id="cb1-67"><a href=""></a>      se = NA,  # Standard error not directly available for overall effect size</span>
+<span id="cb1-68"><a href=""></a>      ci_lower = fixed_effect$ci.lb,</span>
+<span id="cb1-69"><a href=""></a>      ci_upper = fixed_effect$ci.ub,</span>
+<span id="cb1-70"><a href=""></a>      color = 1</span>
+<span id="cb1-71"><a href=""></a>    )</span>
+<span id="cb1-72"><a href=""></a>    </span>
+<span id="cb1-73"><a href=""></a>         # Extract relevant information from the fixed_effect object</span>
+<span id="cb1-74"><a href=""></a>    summary_tableUN &lt;- data.frame(</span>
+<span id="cb1-75"><a href=""></a>      study = "Overall_unweighted",</span>
+<span id="cb1-76"><a href=""></a>      n = NA,</span>
+<span id="cb1-77"><a href=""></a>      mean_ratio = fixed_effectUN$b,</span>
+<span id="cb1-78"><a href=""></a>      se = NA,  # Standard error not directly available for overall effect size</span>
+<span id="cb1-79"><a href=""></a>      ci_lower = fixed_effectUN$ci.lb,</span>
+<span id="cb1-80"><a href=""></a>      ci_upper = fixed_effectUN$ci.ub,</span>
+<span id="cb1-81"><a href=""></a>      color = 1</span>
+<span id="cb1-82"><a href=""></a>    )</span>
+<span id="cb1-83"><a href=""></a>    </span>
+<span id="cb1-84"><a href=""></a>    # Combine study data with overall effect size</span>
+<span id="cb1-85"><a href=""></a>    plot_data &lt;- rbind(studies, summary_table)</span>
+<span id="cb1-86"><a href=""></a>     plot_data &lt;- rbind(plot_data, summary_tableUN)</span>
+<span id="cb1-87"><a href=""></a>    </span>
+<span id="cb1-88"><a href=""></a>    # Create forest plot</span>
+<span id="cb1-89"><a href=""></a>    forest_plot &lt;- ggplot(plot_data, aes(x = reorder(study, rev(study)), y = mean_ratio)) +</span>
+<span id="cb1-90"><a href=""></a>      geom_errorbar(aes(ymin = ci_lower, ymax = ci_upper), width = 0.2, size = 1) + </span>
+<span id="cb1-91"><a href=""></a>      geom_point(aes(color = factor(color))) +</span>
+<span id="cb1-92"><a href=""></a>      geom_hline(yintercept = true_effect_size, linetype = "dashed", color = "blue") +  </span>
+<span id="cb1-93"><a href=""></a>      labs(title = "Forest Plot : Fixed Effect Model",</span>
+<span id="cb1-94"><a href=""></a>           subtitle = paste("I² = ", round(fixed_effect$I2, 2), "%"),</span>
+<span id="cb1-95"><a href=""></a>           x = "Studies",</span>
+<span id="cb1-96"><a href=""></a>           y = "Effect Size (Ratio)") +</span>
+<span id="cb1-97"><a href=""></a>      theme_minimal() +</span>
+<span id="cb1-98"><a href=""></a>      theme(legend.position = "none") +  # Remove legend for clarity</span>
+<span id="cb1-99"><a href=""></a>      coord_flip() +</span>
+<span id="cb1-100"><a href=""></a>      # geom_rect(aes(xmin = -Inf, xmax = Inf, ymin = true_effect_size - 1.96 * sd_true, ymax = true_effect_size + 1.96 * sd_true), </span>
+<span id="cb1-101"><a href=""></a>      #           fill = "blue", alpha = 0.1)+</span>
+<span id="cb1-102"><a href=""></a>           geom_point(aes(size = 1/se, color = factor(color))) +</span>
+<span id="cb1-103"><a href=""></a>      scale_size_continuous(range = c(2, 5))+</span>
+<span id="cb1-104"><a href=""></a>      geom_text(aes(x=reorder(study, rev(study)), y=0.5, label=paste0("n=",n)))+</span>
+<span id="cb1-105"><a href=""></a>      geom_hline(yintercept = true_effect_size, linetype = "dotted", color = "blue")</span>
+<span id="cb1-106"><a href=""></a></span>
+<span id="cb1-107"><a href=""></a>    # Display the forest plot</span>
+<span id="cb1-108"><a href=""></a>    print(forest_plot)</span>
+<span id="cb1-109"><a href=""></a>  })</span>
+<span id="cb1-110"><a href=""></a>}</span>
+<span id="cb1-111"><a href=""></a></span>
+<span id="cb1-112"><a href=""></a># Run the application </span>
+<span id="cb1-113"><a href=""></a>shinyApp(ui = ui, server = server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="fixed-effect-model-3" class="slide level2 smaller">
+<h2>Fixed-Effect Model</h2>
+
+<img data-src="images/fixed%20model.png" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="limitations-of-fixed-effect-models" class="slide level2">
+<h2>Limitations of Fixed-Effect Models</h2>
+<ul>
+<li><p>The outcome of interest could have been measured in many ways.</p></li>
+<li><p>The type of treatment may not have been exactly the same.</p></li>
+<li><p>The intensity and duration of treatment could differ.</p></li>
+<li><p>The target population of the studies may not have been exactly the same for each study.</p></li>
+<li><p>The control groups used may have been different.</p></li>
+</ul>
+</section>
+<section id="random-effects-model" class="slide level2 smaller">
+<h2>Random-Effects Model</h2>
+<p>The <strong>Random-Effects Model</strong> accounts for variability among studies, assuming that effect sizes vary due to different study conditions.</p>
+<h3 id="formula-1">Formula:</h3>
+<p><span class="math display">\[\hat{\theta}_k = \mu + \zeta_k + \epsilon_k ;  \quad \mathcal\zeta_k \sim {N}(0, 𝒯_k^2) ; \quad \mathcal\epsilon_k \sim {N}(0, s_k^2)\]</span></p>
+<ul>
+<li>hat_theta_k: Estimated effect size for study ( k ).</li>
+<li>mu : The overall mean (or meta-analytic mean).</li>
+<li>𝜁_𝑘: Random effect for study ( k ),𝒯^2 is the between-study variance.</li>
+<li>epsilon_k: error term, sk2is the within study variance</li>
+</ul>
+</section>
+<section id="random-model-estimation" class="slide level2 smaller">
+<h2>Random Model Estimation</h2>
+<ul>
+<li>The weights are defined as:</li>
+</ul>
+<p><span class="math display">\[
+w_i^* = \frac{1}{\sigma^2 + \tau^2}
+\]</span></p>
+<p>Where:</p>
+<ul>
+<li>( _k ): Estimated effect size for study ( k ).</li>
+<li>( ): The overall mean (or meta-analytic mean).</li>
+<li>( _k (0, ^2) ): Random effect for study ( k ), where ( ^2 ) is the between-study variance.</li>
+<li>( _k (0, v_k) ): Within-study error term for study ( k ), where ( v_k ) is the variance of the effect size estimate for study ( k ).</li>
+</ul>
+</section>
+<section id="heterogeneity-i²-statistic" class="slide level2 smaller">
+<h2>Heterogeneity : I² Statistic</h2>
+<ul>
+<li><p><strong>Definition</strong>:</p>
+<ul>
+<li>I² (I-squared) is a measure of the percentage of variation across studies that is attributable to heterogeneity rather than chance.</li>
+</ul></li>
+<li><p><strong>Importance</strong>:</p>
+<ul>
+<li>Understanding I² helps researchers assess the consistency of results across studies.</li>
+<li>It informs decisions on whether to use fixed or random effects models in meta-analyses.</li>
+</ul></li>
+<li><p><strong>Calculation</strong>:</p>
+<ul>
+<li>I² is calculated from the Q statistic:</li>
+</ul>
+<p><span class="math display">\[  I² = 100\% \times \frac{\tau^2}{\tau^2 + s_k^2}\]</span></p>
+<p>Where: 𝒯^2 is the between-study variance. sk2is the within study variance</p></li>
+</ul>
+</section>
+<section id="i²-statistic" class="slide level2 smaller">
+<h2>I² Statistic</h2>
+<ul>
+<li><strong>Considerations</strong>:
+<ul>
+<li>High I² values do not always imply that meta-analysis is inappropriate.</li>
+<li>Subgroup analyses and meta-regressions can help explore sources of heterogeneity.</li>
+</ul></li>
+<li><strong>Interpretation</strong>:
+<ul>
+<li><strong>0%</strong>: No heterogeneity. All studies have similar effects.</li>
+<li><strong>1-25%</strong>: Low heterogeneity. Minor variations among studies.</li>
+<li><strong>25-50%</strong>: Moderate heterogeneity. Some differences in effects.</li>
+<li><strong>50-75%</strong>: Substantial heterogeneity. Notable variations among studies.</li>
+<li><strong>75-100%</strong>: Considerable heterogeneity. Major differences in effects.</li>
+</ul></li>
+</ul>
+</section>
+<section id="mixed-model-estimation" class="slide level2 scrollable">
+<h2>Mixed Model Estimation</h2>
+<p>Let’s say: trueRR=1.5; and (𝜃_𝑘 )&nbsp;̂=𝜇+ 𝜁_𝑘+ 𝜀_𝑘</p>
+<div class="sourceCode" id="cb2" data-engine="r"><pre class="sourceCode numberSource shinylive-r number-lines code-with-copy"><code class="sourceCode"><span id="cb2-1"><a href=""></a>#| standalone: true</span>
+<span id="cb2-2"><a href=""></a>#| viewerHeight: 600</span>
+<span id="cb2-3"><a href=""></a># Load necessary libraries</span>
+<span id="cb2-4"><a href=""></a>library(shiny)</span>
+<span id="cb2-5"><a href=""></a>library(metafor)</span>
+<span id="cb2-6"><a href=""></a>library(ggplot2)</span>
+<span id="cb2-7"><a href=""></a>library(truncnorm)</span>
+<span id="cb2-8"><a href=""></a>library(gridExtra)</span>
+<span id="cb2-9"><a href=""></a></span>
+<span id="cb2-10"><a href=""></a># Define UI</span>
+<span id="cb2-11"><a href=""></a>ui &lt;- fluidPage(</span>
+<span id="cb2-12"><a href=""></a>  titlePanel("Forest Plot with Fixed Effect Model"),</span>
+<span id="cb2-13"><a href=""></a>  </span>
+<span id="cb2-14"><a href=""></a>  sidebarLayout(</span>
+<span id="cb2-15"><a href=""></a>    sidebarPanel(</span>
+<span id="cb2-16"><a href=""></a>      sliderInput("sd_true", "Standard Deviation of True Effect Size:",</span>
+<span id="cb2-17"><a href=""></a>                  min = 0, max = 1, value = 0.05, step = 0.01),</span>
+<span id="cb2-18"><a href=""></a>      sliderInput("sd_sampling", "Standard Deviation of Sampling Error:",</span>
+<span id="cb2-19"><a href=""></a>                  min = 0, max = 1, value = 0.2, step = 0.01),</span>
+<span id="cb2-20"><a href=""></a>      sliderInput("n_studies", "Number of Studies:",</span>
+<span id="cb2-21"><a href=""></a>                  min = 1, max = 10, value = 5, step = 1),</span>
+<span id="cb2-22"><a href=""></a>       checkboxInput("show_mean", "show_mean_without_sample_error", value = TRUE)</span>
+<span id="cb2-23"><a href=""></a>    ),</span>
+<span id="cb2-24"><a href=""></a>    </span>
+<span id="cb2-25"><a href=""></a>    mainPanel(</span>
+<span id="cb2-26"><a href=""></a>      plotOutput("forestPlot")</span>
+<span id="cb2-27"><a href=""></a>    )</span>
+<span id="cb2-28"><a href=""></a>  )</span>
+<span id="cb2-29"><a href=""></a>)</span>
+<span id="cb2-30"><a href=""></a></span>
+<span id="cb2-31"><a href=""></a># Define server logic</span>
+<span id="cb2-32"><a href=""></a>server &lt;- function(input, output) {</span>
+<span id="cb2-33"><a href=""></a>  </span>
+<span id="cb2-34"><a href=""></a>  output$forestPlot &lt;- renderPlot({</span>
+<span id="cb2-35"><a href=""></a>    # Set parameters</span>
+<span id="cb2-36"><a href=""></a>    set.seed(113)  # For reproducibility</span>
+<span id="cb2-37"><a href=""></a>    true_effect_size &lt;- 1.5  # Specify a true effect size (e.g., ratio)</span>
+<span id="cb2-38"><a href=""></a>    sd_true &lt;- input$sd_true</span>
+<span id="cb2-39"><a href=""></a>    sd_sampling &lt;- input$sd_sampling</span>
+<span id="cb2-40"><a href=""></a>    n_studies &lt;- input$n_studies</span>
+<span id="cb2-41"><a href=""></a>    sample_sizes &lt;- sample(20:100, n_studies)  # Random sample sizes for each study</span>
+<span id="cb2-42"><a href=""></a></span>
+<span id="cb2-43"><a href=""></a>    # Generate studies data</span>
+<span id="cb2-44"><a href=""></a>    studies &lt;- data.frame(</span>
+<span id="cb2-45"><a href=""></a>      study = paste("Study", 1:n_studies),</span>
+<span id="cb2-46"><a href=""></a>      n = sample_sizes</span>
+<span id="cb2-47"><a href=""></a>    )</span>
+<span id="cb2-48"><a href=""></a>    </span>
+<span id="cb2-49"><a href=""></a>    # Generate random effect sizes with associated sampling error</span>
+<span id="cb2-50"><a href=""></a>    studies$mean_1 &lt;- rnorm(n_studies, mean = true_effect_size, sd = sd_true)</span>
+<span id="cb2-51"><a href=""></a>    studies$mean_ratio&lt;- studies$mean_1+rnorm(n_studies, mean = 0, sd = sd_sampling)</span>
+<span id="cb2-52"><a href=""></a>    </span>
+<span id="cb2-53"><a href=""></a>    # Generate standard errors from a truncated normal distribution</span>
+<span id="cb2-54"><a href=""></a>    studies$se &lt;- rtruncnorm(n_studies, a = 0, mean = 0.2, sd = 0.1)</span>
+<span id="cb2-55"><a href=""></a>    </span>
+<span id="cb2-56"><a href=""></a>    # Calculate confidence intervals</span>
+<span id="cb2-57"><a href=""></a>    studies$ci_lower &lt;- studies$mean_ratio - 1.96 * studies$se</span>
+<span id="cb2-58"><a href=""></a>    studies$ci_upper &lt;- studies$mean_ratio + 1.96 * studies$se</span>
+<span id="cb2-59"><a href=""></a>    studies$color = 2</span>
+<span id="cb2-60"><a href=""></a>    </span>
+<span id="cb2-61"><a href=""></a>    # Calculate mean and CI for the overall effect size using a fixed-effects model</span>
+<span id="cb2-62"><a href=""></a>    random_effect &lt;- rma(yi = mean_ratio, sei = se,data=studies)</span>
+<span id="cb2-63"><a href=""></a>     fixed_effectUN &lt;- rma(yi = mean_ratio, sei = se, method = "FE",weighted=FALSE,data=studies)</span>
+<span id="cb2-64"><a href=""></a>    </span>
+<span id="cb2-65"><a href=""></a>     # Extract relevant information from the random_effect object</span>
+<span id="cb2-66"><a href=""></a>    summary_table &lt;- data.frame(</span>
+<span id="cb2-67"><a href=""></a>      study = "Overall_random_effect",</span>
+<span id="cb2-68"><a href=""></a>      n = NA,</span>
+<span id="cb2-69"><a href=""></a>      mean_1 = NA,</span>
+<span id="cb2-70"><a href=""></a>      mean_ratio = random_effect$b,</span>
+<span id="cb2-71"><a href=""></a>      se = NA,  # Standard error not directly available for overall effect size</span>
+<span id="cb2-72"><a href=""></a>      ci_lower = random_effect$ci.lb,</span>
+<span id="cb2-73"><a href=""></a>      ci_upper = random_effect$ci.ub,</span>
+<span id="cb2-74"><a href=""></a>      color = 1</span>
+<span id="cb2-75"><a href=""></a>    )</span>
+<span id="cb2-76"><a href=""></a>    </span>
+<span id="cb2-77"><a href=""></a>         # Extract relevant information from the fixed_effect object</span>
+<span id="cb2-78"><a href=""></a>    summary_tableUN &lt;- data.frame(</span>
+<span id="cb2-79"><a href=""></a>      study = "Overall_unweighted",</span>
+<span id="cb2-80"><a href=""></a>      n = NA,</span>
+<span id="cb2-81"><a href=""></a>      mean_1 = NA,</span>
+<span id="cb2-82"><a href=""></a>      mean_ratio = fixed_effectUN$b,</span>
+<span id="cb2-83"><a href=""></a>      se = NA,  # Standard error not directly available for overall effect size</span>
+<span id="cb2-84"><a href=""></a>      ci_lower = fixed_effectUN$ci.lb,</span>
+<span id="cb2-85"><a href=""></a>      ci_upper = fixed_effectUN$ci.ub,</span>
+<span id="cb2-86"><a href=""></a>      color = 1</span>
+<span id="cb2-87"><a href=""></a>    )</span>
+<span id="cb2-88"><a href=""></a>    </span>
+<span id="cb2-89"><a href=""></a>    # Combine study data with overall effect size</span>
+<span id="cb2-90"><a href=""></a>    plot_data &lt;- rbind(studies, summary_table)</span>
+<span id="cb2-91"><a href=""></a>     plot_data &lt;- rbind(plot_data, summary_tableUN)</span>
+<span id="cb2-92"><a href=""></a>    </span>
+<span id="cb2-93"><a href=""></a>     </span>
+<span id="cb2-94"><a href=""></a>     k &lt;- random_effect$k</span>
+<span id="cb2-95"><a href=""></a>     wi &lt;- 1/random_effect$vi</span>
+<span id="cb2-96"><a href=""></a>     vt &lt;- (k-1) * sum(wi) / (sum(wi)^2 - sum(wi^2))</span>
+<span id="cb2-97"><a href=""></a>     tau_squared&lt;- random_effect$tau2</span>
+<span id="cb2-98"><a href=""></a>     total_variability &lt;- vt + tau_squared</span>
+<span id="cb2-99"><a href=""></a>     </span>
+<span id="cb2-100"><a href=""></a>     data &lt;- data.frame(</span>
+<span id="cb2-101"><a href=""></a>  VarianceType = c("Between-study Variance (τ²)", "Sampling Variability (σ²)"),</span>
+<span id="cb2-102"><a href=""></a>  Proportion = c(tau_squared / total_variability, vt / total_variability)</span>
+<span id="cb2-103"><a href=""></a>)</span>
+<span id="cb2-104"><a href=""></a></span>
+<span id="cb2-105"><a href=""></a></span>
+<span id="cb2-106"><a href=""></a>    # Create forest plot</span>
+<span id="cb2-107"><a href=""></a>    p1&lt;-forest_plot &lt;- ggplot(plot_data, aes(x = reorder(study, rev(study)))) +</span>
+<span id="cb2-108"><a href=""></a>      geom_errorbar(aes(ymin = ci_lower, ymax = ci_upper), width = 0.2, size = 1) + </span>
+<span id="cb2-109"><a href=""></a>      geom_point(aes(y = mean_ratio,color = factor(color))) +</span>
+<span id="cb2-110"><a href=""></a>      {if (input$show_mean) geom_point(aes(y = mean_1), color = "red", size = 4, pch = 8)</span>
+<span id="cb2-111"><a href=""></a>      }+</span>
+<span id="cb2-112"><a href=""></a>      geom_hline(yintercept = true_effect_size, linetype = "dashed", color = "blue") +  </span>
+<span id="cb2-113"><a href=""></a>      labs(title = "Forest Plot : Random Effect Model",</span>
+<span id="cb2-114"><a href=""></a>           subtitle = paste("I² = ", round(random_effect$I2, 2), "%"),</span>
+<span id="cb2-115"><a href=""></a>           x = "Studies",</span>
+<span id="cb2-116"><a href=""></a>           y = "Effect Size (Ratio)") +</span>
+<span id="cb2-117"><a href=""></a>      theme_minimal() +</span>
+<span id="cb2-118"><a href=""></a>      theme(legend.position = "none") +  # Remove legend for clarity</span>
+<span id="cb2-119"><a href=""></a>      coord_flip() +</span>
+<span id="cb2-120"><a href=""></a>       geom_rect(aes(xmin = -Inf, xmax = Inf,</span>
+<span id="cb2-121"><a href=""></a>                     ymin = true_effect_size - 1.96 * sd_true,</span>
+<span id="cb2-122"><a href=""></a>                     ymax = true_effect_size + 1.96 * sd_true), </span>
+<span id="cb2-123"><a href=""></a>                 fill = "blue", alpha = 0.05)+</span>
+<span id="cb2-124"><a href=""></a>           geom_point(aes(y = mean_ratio,size = 1/se, color = factor(color))) +</span>
+<span id="cb2-125"><a href=""></a>      scale_size_continuous(range = c(2, 5))+</span>
+<span id="cb2-126"><a href=""></a>      geom_text(aes(x=reorder(study, rev(study)), y=0.5, label=paste0("n=",n)))+</span>
+<span id="cb2-127"><a href=""></a>      geom_hline(yintercept = true_effect_size, linetype = "dotted", color = "blue")</span>
+<span id="cb2-128"><a href=""></a></span>
+<span id="cb2-129"><a href=""></a>    </span>
+<span id="cb2-130"><a href=""></a>    p2&lt;- ggplot(data, aes(x = "", y = Proportion, fill = VarianceType)) +</span>
+<span id="cb2-131"><a href=""></a>     geom_bar(stat = "identity") +  # Flip the axes for better readability</span>
+<span id="cb2-132"><a href=""></a>     labs(title = "Proportions of Variance in Meta-analysis (I²)",</span>
+<span id="cb2-133"><a href=""></a>          x = "",</span>
+<span id="cb2-134"><a href=""></a>          y = "Proportion") +</span>
+<span id="cb2-135"><a href=""></a>     scale_fill_manual(values = c("#FF9999", "#66B3FF")) +  # Custom colors</span>
+<span id="cb2-136"><a href=""></a>     theme_minimal() +</span>
+<span id="cb2-137"><a href=""></a>     theme(legend.title = element_blank())+coord_flip()</span>
+<span id="cb2-138"><a href=""></a>    </span>
+<span id="cb2-139"><a href=""></a>    </span>
+<span id="cb2-140"><a href=""></a>    # Display the forest plot</span>
+<span id="cb2-141"><a href=""></a>   grid.arrange(p1, p2, ncol = 1, heights = c(3, 1))</span>
+<span id="cb2-142"><a href=""></a>  })</span>
+<span id="cb2-143"><a href=""></a>}</span>
+<span id="cb2-144"><a href=""></a></span>
+<span id="cb2-145"><a href=""></a># Run the application </span>
+<span id="cb2-146"><a href=""></a>shinyApp(ui = ui, server = server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="methods-for-estimating-τ²" class="slide level2">
+<h2>Methods for Estimating τ²</h2>
+<ul>
+<li><strong>DerSimonian-Laird (DL)</strong>: Widely used but underestimates with high heterogeneity.</li>
+<li><strong>Restricted Maximum Likelihood (REML)</strong>: Less biased, recommended for small samples.</li>
+<li><strong>Hedges &amp; Olkin (HO)</strong>: Adjusted moment estimator.</li>
+<li><strong>Paule-Mandel (PM)</strong>: Performs well under high heterogeneity.</li>
+<li><strong>Bayesian Estimation</strong>: Provides a distribution for τ², useful with prior knowledge.</li>
+</ul>
+</section>
+<section id="understanding-knapp-hartung-adjustments" class="slide level2 smaller">
+<h2>Understanding Knapp-Hartung Adjustments</h2>
+<ul>
+<li><p>The <strong>Knapp-Hartung Adjustments</strong> are applied to improve the accuracy of <strong>confidence intervals</strong> in random-effects meta-analyses.</p></li>
+<li><p>They adjust the <strong>standard errors</strong> of the pooled effect size to account for the uncertainty in estimating between-study variance (τ²).</p></li>
+<li><p>More <strong>conservative</strong> than traditional methods, resulting in <strong>wider confidence intervals</strong>, especially when the number of studies is small or heterogeneity is high.</p></li>
+<li><p>Recommended for <strong>meta-analyses with few studies</strong> (&lt; 10).</p></li>
+<li><p>Useful when between-study heterogeneity is suspected but difficult to quantify accurately.</p></li>
+<li><p>Can prevent <strong>false positives</strong> by reducing the risk of overestimating precision.</p></li>
+</ul>
+</section>
+<section id="mixed-model-estimation-1" class="slide level2 scrollable">
+<h2>Mixed Model Estimation</h2>
+<h3 id="section"><img data-src="images/random_model.png" class="quarto-figure quarto-figure-center"></h3>
+</section>
+<section id="three-level-meta-analytic-model" class="slide level2 smaller">
+<h2>Three-Level Meta-Analytic Model</h2>
+<p>Overview</p>
+<p>Three-level meta-analysis extends the traditional random-effects model by incorporating an additional level to account for dependencies in the data, such as multiple effect sizes within studies. This approach models the variability at three levels:</p>
+<ol type="1">
+<li><strong>Level 1</strong>: Sampling variability within effect sizes.</li>
+<li><strong>Level 2</strong>: Variability between effect sizes within studies.</li>
+<li><strong>Level 3</strong>: Variability between studies.</li>
+</ol>
+<h3 class="smaller" id="purpose-of-the-model">Purpose of the Model</h3>
+<p>The three-level model is ideal for datasets with hierarchical structures, allowing for accurate estimation of variance components and avoiding underestimation of standard errors. This model is frequently used when there are multiple outcomes per study or when primary studies include repeated measures.</p>
+</section>
+<section id="three-level-meta-analytic-model-1" class="slide level2 smaller">
+<h2>Three-Level Meta-Analytic Model</h2>
+<h3 id="formula-2">Formula</h3>
+<p><span class="math display">\[\hat{\theta}_{ij} = \mu + u_k + \zeta_{kj} + \epsilon_{kj}\]</span></p>
+<p><span class="math display">\[u_j \sim N(0, \tau_1^2); \quad \zeta_{ij} \sim N(0, \tau_2^2); \quad \epsilon_{ij} \sim N(0, s_{kj}^2)\]</span></p>
+<p>Where:</p>
+<ul>
+<li>hat_theta_kj: Estimated effect size for the ( k )-th effect size in the ( j )-th study.</li>
+<li>mu: The overall mean effect size.</li>
+<li>u_k: Random effect for study ( k ), with ( _1^2 ) as the between-study variance.</li>
+<li>zeta_{kj}: Random effect for effect size ( k ) within study ( j )</li>
+<li>epsilon_kj: Error term, with ( v_{kj} ) representing the sampling variance.</li>
+</ul>
+</section>
+<section id="three-level-random-effect-model-weights" class="slide level2">
+<h2>Three level random effect model: weights</h2>
+<p>. - Weights for individual effect sizes are defined as:</p>
+<p><span class="math display">\[
+w_{ij} = \frac{1}{\tau_1^2 + \tau_2^2 + v_{ij}}
+\]</span></p>
+</section>
+<section id="three-level-random-effect-model" class="slide level2">
+<h2>Three level random effect model</h2>
+<p>Let’s say RR=1.5; (𝜃_𝑘 )&nbsp;̂=𝜇+ 𝜁_((2)𝑗𝑘)+𝜁_((3)𝑗) 〖+ 𝜀〗_𝑗𝑘</p>
+<div class="sourceCode" id="cb3" data-engine="r"><pre class="sourceCode numberSource shinylive-r number-lines code-with-copy"><code class="sourceCode"><span id="cb3-1"><a href=""></a>#| standalone: true</span>
+<span id="cb3-2"><a href=""></a>#| viewerHeight: 600</span>
+<span id="cb3-3"><a href=""></a># Load necessary libraries</span>
+<span id="cb3-4"><a href=""></a>library(shiny)</span>
+<span id="cb3-5"><a href=""></a>library(metafor)</span>
+<span id="cb3-6"><a href=""></a>library(ggplot2)</span>
+<span id="cb3-7"><a href=""></a>library(truncnorm)</span>
+<span id="cb3-8"><a href=""></a>library(gridExtra)</span>
+<span id="cb3-9"><a href=""></a>library(dplyr)</span>
+<span id="cb3-10"><a href=""></a>library(magrittr)</span>
+<span id="cb3-11"><a href=""></a></span>
+<span id="cb3-12"><a href=""></a># Define UI</span>
+<span id="cb3-13"><a href=""></a>ui &lt;- fluidPage(</span>
+<span id="cb3-14"><a href=""></a>  titlePanel("Forest Plot with Three-Level Meta-Analytical Model"),</span>
+<span id="cb3-15"><a href=""></a>  </span>
+<span id="cb3-16"><a href=""></a>  sidebarLayout(</span>
+<span id="cb3-17"><a href=""></a>    sidebarPanel(</span>
+<span id="cb3-18"><a href=""></a>      sliderInput("sd_true", "Standard Deviation of True Effect Size:",</span>
+<span id="cb3-19"><a href=""></a>                  min = 0, max = 1, value = 0.05, step = 0.01),</span>
+<span id="cb3-20"><a href=""></a>      sliderInput("sd_sampling", "Standard Deviation of Sampling Error:",</span>
+<span id="cb3-21"><a href=""></a>                  min = 0, max = 1, value = 0.2, step = 0.01),</span>
+<span id="cb3-22"><a href=""></a>      sliderInput("sd_group", "Standard Deviation of Group Effect:",</span>
+<span id="cb3-23"><a href=""></a>                  min = 0, max = 1, value = 0.15, step = 0.01),  # New slider for group effect variance</span>
+<span id="cb3-24"><a href=""></a>      sliderInput("n_studies", "Number of Studies:",</span>
+<span id="cb3-25"><a href=""></a>                  min = 3, max = 15, value = 10, step = 1),</span>
+<span id="cb3-26"><a href=""></a>      sliderInput("n_groups", "Number of Groups:",</span>
+<span id="cb3-27"><a href=""></a>                  min = 2, max = 5, value = 3, step = 1),</span>
+<span id="cb3-28"><a href=""></a>      checkboxInput("show_mean", "Show mean without sample error", value = TRUE)</span>
+<span id="cb3-29"><a href=""></a>    ),</span>
+<span id="cb3-30"><a href=""></a>    </span>
+<span id="cb3-31"><a href=""></a>    mainPanel(</span>
+<span id="cb3-32"><a href=""></a>      plotOutput("forestPlot")</span>
+<span id="cb3-33"><a href=""></a>    )</span>
+<span id="cb3-34"><a href=""></a>  )</span>
+<span id="cb3-35"><a href=""></a>)</span>
+<span id="cb3-36"><a href=""></a></span>
+<span id="cb3-37"><a href=""></a># Define server logic</span>
+<span id="cb3-38"><a href=""></a>server &lt;- function(input, output) {</span>
+<span id="cb3-39"><a href=""></a>  </span>
+<span id="cb3-40"><a href=""></a>  output$forestPlot &lt;- renderPlot({</span>
+<span id="cb3-41"><a href=""></a>    # Set parameters</span>
+<span id="cb3-42"><a href=""></a>    set.seed(113)  # For reproducibility</span>
+<span id="cb3-43"><a href=""></a>    true_effect_size &lt;- 1.5  # Specify a true effect size (e.g., ratio)</span>
+<span id="cb3-44"><a href=""></a>    sd_true &lt;- input$sd_true</span>
+<span id="cb3-45"><a href=""></a>    sd_sampling &lt;- input$sd_sampling</span>
+<span id="cb3-46"><a href=""></a>    sd_group &lt;- input$sd_group  # Standard deviation for group effects</span>
+<span id="cb3-47"><a href=""></a>    n_studies &lt;- input$n_studies</span>
+<span id="cb3-48"><a href=""></a>    n_groups &lt;- input$n_groups</span>
+<span id="cb3-49"><a href=""></a>    </span>
+<span id="cb3-50"><a href=""></a>    # Assign each study to a group</span>
+<span id="cb3-51"><a href=""></a>    group_assignments &lt;- rep(1:n_groups, length.out = n_studies)</span>
+<span id="cb3-52"><a href=""></a>    </span>
+<span id="cb3-53"><a href=""></a>    # Generate studies data</span>
+<span id="cb3-54"><a href=""></a>    studies &lt;- data.frame(</span>
+<span id="cb3-55"><a href=""></a>      study = paste("Study", 1:n_studies),</span>
+<span id="cb3-56"><a href=""></a>      n = sample(20:100, n_studies),  # Random sample sizes for each study</span>
+<span id="cb3-57"><a href=""></a>      group = factor(group_assignments)</span>
+<span id="cb3-58"><a href=""></a>    ) %&gt;% arrange(group) %&gt;% mutate(study = paste("Study", 1:n_studies))</span>
+<span id="cb3-59"><a href=""></a></span>
+<span id="cb3-60"><a href=""></a>    # Generate random group effects and add to the true effect sizes</span>
+<span id="cb3-61"><a href=""></a>    group_effects &lt;- rnorm(n_groups, mean = 0, sd = sd_group)</span>
+<span id="cb3-62"><a href=""></a>    studies$group_effect &lt;- group_effects[studies$group]</span>
+<span id="cb3-63"><a href=""></a>    </span>
+<span id="cb3-64"><a href=""></a>    # Generate true effect sizes with associated group and sampling error</span>
+<span id="cb3-65"><a href=""></a>    studies$group_effect&lt;- studies$group_effect+  true_effect_size</span>
+<span id="cb3-66"><a href=""></a>    studies$mean_1 &lt;- studies$group_effect+ rnorm(n_studies, mean = 0, sd = sd_true)   </span>
+<span id="cb3-67"><a href=""></a>    studies$mean_ratio &lt;- studies$mean_1 + rnorm(n_studies, mean = 0, sd = sd_sampling)</span>
+<span id="cb3-68"><a href=""></a>    </span>
+<span id="cb3-69"><a href=""></a>    # Generate standard errors from a truncated normal distribution</span>
+<span id="cb3-70"><a href=""></a>    studies$se &lt;- rtruncnorm(n_studies, a = 0, mean = 0.2, sd = 0.1)</span>
+<span id="cb3-71"><a href=""></a>    </span>
+<span id="cb3-72"><a href=""></a>    # Calculate confidence intervals</span>
+<span id="cb3-73"><a href=""></a>    studies$ci_lower &lt;- studies$mean_ratio - 1.96 * studies$se</span>
+<span id="cb3-74"><a href=""></a>    studies$ci_upper &lt;- studies$mean_ratio + 1.96 * studies$se</span>
+<span id="cb3-75"><a href=""></a>    studies$color &lt;- 2</span>
+<span id="cb3-76"><a href=""></a>    </span>
+<span id="cb3-77"><a href=""></a>    # Calculate overall effect size using a three-level model</span>
+<span id="cb3-78"><a href=""></a>    random_effect &lt;- rma.mv(yi = mean_ratio, V = se^2, random = ~ 1 | group/study, data = studies)</span>
+<span id="cb3-79"><a href=""></a>    </span>
+<span id="cb3-80"><a href=""></a>    # Create summary table for the overall effect size</span>
+<span id="cb3-81"><a href=""></a>    summary_table &lt;- data.frame(</span>
+<span id="cb3-82"><a href=""></a>      study = "Overall_random_effect",</span>
+<span id="cb3-83"><a href=""></a>      n = NA,</span>
+<span id="cb3-84"><a href=""></a>      group = NA,</span>
+<span id="cb3-85"><a href=""></a>      mean_1 = NA,</span>
+<span id="cb3-86"><a href=""></a>      group_effect = NA,</span>
+<span id="cb3-87"><a href=""></a>      mean_ratio = random_effect$b,</span>
+<span id="cb3-88"><a href=""></a>      se = NA,</span>
+<span id="cb3-89"><a href=""></a>      ci_lower = random_effect$ci.lb,</span>
+<span id="cb3-90"><a href=""></a>      ci_upper = random_effect$ci.ub,</span>
+<span id="cb3-91"><a href=""></a>      color = 1</span>
+<span id="cb3-92"><a href=""></a>    )</span>
+<span id="cb3-93"><a href=""></a>    </span>
+<span id="cb3-94"><a href=""></a>    # Combine study data with overall effect size</span>
+<span id="cb3-95"><a href=""></a>    plot_data &lt;- rbind(studies, summary_table)</span>
+<span id="cb3-96"><a href=""></a>    </span>
+<span id="cb3-97"><a href=""></a></span>
+<span id="cb3-98"><a href=""></a>  #  Create forest plot</span>
+<span id="cb3-99"><a href=""></a>    p1 &lt;- ggplot(plot_data, aes(x = reorder(study, rev(group)))) +</span>
+<span id="cb3-100"><a href=""></a>      geom_errorbar(aes(ymin = ci_lower, ymax = ci_upper), width = 0.2, size = 1) +</span>
+<span id="cb3-101"><a href=""></a>      geom_point(aes(y = mean_ratio, color = factor(group))) +</span>
+<span id="cb3-102"><a href=""></a>   {if (input$show_mean) geom_point(aes(y = mean_1), color = "red", size = 4, pch = 8)} +</span>
+<span id="cb3-103"><a href=""></a>     {if (input$show_mean) geom_point(aes(y = group_effect), color = "orange", size = 4, pch = 9)} +</span>
+<span id="cb3-104"><a href=""></a>      geom_hline(yintercept = true_effect_size, linetype = "dashed", color = "blue") +</span>
+<span id="cb3-105"><a href=""></a>      labs(title = "Forest Plot: Three-Level Meta-Analysis Model",</span>
+<span id="cb3-106"><a href=""></a>           x = "Studies",</span>
+<span id="cb3-107"><a href=""></a>           y = "Effect Size (Ratio)") +</span>
+<span id="cb3-108"><a href=""></a>      theme_minimal() +</span>
+<span id="cb3-109"><a href=""></a>      theme(legend.position = "none") +</span>
+<span id="cb3-110"><a href=""></a>      coord_flip() +</span>
+<span id="cb3-111"><a href=""></a>      geom_text(aes(x = reorder(study, rev(study)), y = 0.5, label = paste0("Group = ", group, "; n = ", n))) +</span>
+<span id="cb3-112"><a href=""></a>      scale_size_continuous(range = c(2, 5)) +</span>
+<span id="cb3-113"><a href=""></a>      geom_hline(yintercept = true_effect_size, linetype = "dotted", color = "blue")+</span>
+<span id="cb3-114"><a href=""></a>             geom_rect(aes(xmin = -Inf, xmax = Inf,</span>
+<span id="cb3-115"><a href=""></a>                     ymin = true_effect_size - 1.96 * sd_true,</span>
+<span id="cb3-116"><a href=""></a>                     ymax = true_effect_size + 1.96 * sd_true), </span>
+<span id="cb3-117"><a href=""></a>                 fill = "blue", alpha = 0.05)</span>
+<span id="cb3-118"><a href=""></a></span>
+<span id="cb3-119"><a href=""></a>    # Display the forest plot</span>
+<span id="cb3-120"><a href=""></a>    p1</span>
+<span id="cb3-121"><a href=""></a>  })</span>
+<span id="cb3-122"><a href=""></a>}</span>
+<span id="cb3-123"><a href=""></a></span>
+<span id="cb3-124"><a href=""></a># Run the application </span>
+<span id="cb3-125"><a href=""></a>shinyApp(ui = ui, server = server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="three-level-random-effect-model-1" class="slide level2">
+<h2>Three level random effect model</h2>
+
+<img data-src="images/3_level.png" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="subgroup-analyses" class="slide level2 smaller">
+<h2>Subgroup Analyses</h2>
+<h3 id="definition">Definition</h3>
+<ul>
+<li><strong>Subgroup Analysis</strong> involves dividing studies into distinct groups based on specific characteristics to assess whether effect sizes vary across these groups.</li>
+</ul>
+<h3 id="purpose">Purpose</h3>
+<ul>
+<li>To identify factors that influence the effect of an intervention and to better understand heterogeneity among study results.</li>
+</ul>
+</section>
+<section id="when-to-conduct-subgroup-analyses" class="slide level2 smaller">
+<h2>When to Conduct Subgroup Analyses</h2>
+<h3 id="criteria-for-subgroup-analysis">Criteria for Subgroup Analysis</h3>
+<ul>
+<li><strong>Significant Heterogeneity:</strong> High I² values suggest further investigation is warranted.</li>
+<li><strong>Hypothesis Testing:</strong> When researchers have specific hypotheses regarding differences in effects.</li>
+<li><strong>Interest in Specific Populations:</strong> To evaluate how different demographics (e.g., age, gender) respond to an intervention.</li>
+</ul>
+</section>
+<section id="methodology-of-subgroup-analyses" class="slide level2 smaller">
+<h2>Methodology of Subgroup Analyses</h2>
+<h3 id="statistical-approach">Statistical Approach</h3>
+<ul>
+<li>Analyze subsets of data separately and compare effect sizes across groups.</li>
+<li>Use a meta-analytic model for each subgroup, maintaining consistency with overall methodology.</li>
+</ul>
+<h3 id="formula-3">Formula</h3>
+<ul>
+<li>For subgroup analyses, the overall model can be modified to include group-specific parameters:</li>
+</ul>
+<p><span class="math display">\[
+\hat{\theta}_{g,k} = \mu_g + \zeta_{g,k} + \epsilon_{g,k}
+\]</span></p>
+<p>Where: - ( <em>{g,k} ): Estimated effect size for study ( k ) in group ( g ). - ( <em>g ): Overall mean effect for group ( g ). - ( </em>{g,k} ): Random effect for study ( k ) in group ( g ). - ( </em>{g,k} ): Error term for study ( k ) in group ( g ).</p>
+</section>
+<section id="meta-regression" class="slide level2 smaller">
+<h2>Meta-Regression</h2>
+<h3 id="definition-1">Definition</h3>
+<ul>
+<li><strong>Meta-Regression</strong> extends meta-analysis by examining how study-level covariates influence effect sizes.</li>
+</ul>
+<h3 id="purpose-1">Purpose</h3>
+<ul>
+<li>To explore relationships between study characteristics (e.g., sample size, intervention duration) and observed effects.</li>
+</ul>
+</section>
+<section id="meta-regression-methodology" class="slide level2 smaller">
+<h2>Meta-Regression Methodology</h2>
+<h3 id="statistical-approach-1">Statistical Approach</h3>
+<ul>
+<li>The meta-regression model includes covariates that may explain variability in effect sizes:</li>
+</ul>
+<p><span class="math display">\[
+\hat{\theta}_k = \mu + \beta_1 x_1 + \beta_2 x_2 + \ldots + \beta_p x_p + \zeta_k + \epsilon_k
+\]</span></p>
+<p>Where: - ( x_i ): Study-level covariate. - ( _i ): Coefficient indicating the relationship between ( x_i ) and effect size.</p>
+</section>
+<section id="benefits-of-meta-regression" class="slide level2 smaller">
+<h2>Benefits of Meta-Regression</h2>
+<h3 id="advantages">Advantages</h3>
+<ul>
+<li><strong>Identify Predictors of Variability:</strong> Helps clarify which factors influence intervention effectiveness.</li>
+<li><strong>Informs Future Research Directions:</strong> Insights from meta-regression can guide future studies and hypotheses.</li>
+</ul>
+</section>
+<section id="challenges-in-meta-regression" class="slide level2 smaller">
+<h2>Challenges in Meta-Regression</h2>
+<h3 id="considerations">Considerations</h3>
+<ul>
+<li><strong>Sample Size Requirements:</strong> Requires sufficient studies with varying characteristics for robust results.</li>
+<li><strong>Complexity of Interpretation:</strong> Interactions among covariates can complicate understanding.</li>
+</ul>
+<div class="quarto-auto-generated-content">
+<div class="footer footer-default">
+<p>How to calculate and combine effect-sizes?</p>
+</div>
+</div>
+</section>
+    </div>
+  </div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="Pool_ES_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="Pool_ES_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="Pool_ES_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="Pool_ES_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="Pool_ES_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="Pool_ES_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="Pool_ES_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="Pool_ES_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="Pool_ES_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="Pool_ES_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="Pool_ES_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'print',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1150,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 8.0e-2,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+      const toggleBodyColorMode = (bsSheetEl) => {
+        const mode = bsSheetEl.getAttribute("data-mode");
+        const bodyEl = window.document.querySelector("body");
+        if (mode === "dark") {
+          bodyEl.classList.add("quarto-dark");
+          bodyEl.classList.remove("quarto-light");
+        } else {
+          bodyEl.classList.add("quarto-light");
+          bodyEl.classList.remove("quarto-dark");
+        }
+      }
+      const toggleBodyColorPrimary = () => {
+        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+        if (bsSheetEl) {
+          toggleBodyColorMode(bsSheetEl);
+        }
+      }
+      toggleBodyColorPrimary();  
+      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+      tabsets.forEach(function(tabset) {
+        const tabby = new Tabby('#' + tabset.id);
+      });
+      const isCodeAnnotation = (el) => {
+        for (const clz of el.classList) {
+          if (clz.startsWith('code-annotation-')) {                     
+            return true;
+          }
+        }
+        return false;
+      }
+      const onCopySuccess = function(e) {
+        // button target
+        const button = e.trigger;
+        // don't keep focus
+        button.blur();
+        // flash "checked"
+        button.classList.add('code-copy-button-checked');
+        var currentTitle = button.getAttribute("title");
+        button.setAttribute("title", "Copied!");
+        let tooltip;
+        if (window.bootstrap) {
+          button.setAttribute("data-bs-toggle", "tooltip");
+          button.setAttribute("data-bs-placement", "left");
+          button.setAttribute("data-bs-title", "Copied!");
+          tooltip = new bootstrap.Tooltip(button, 
+            { trigger: "manual", 
+              customClass: "code-copy-button-tooltip",
+              offset: [0, -8]});
+          tooltip.show();    
+        }
+        setTimeout(function() {
+          if (tooltip) {
+            tooltip.hide();
+            button.removeAttribute("data-bs-title");
+            button.removeAttribute("data-bs-toggle");
+            button.removeAttribute("data-bs-placement");
+          }
+          button.setAttribute("title", currentTitle);
+          button.classList.remove('code-copy-button-checked');
+        }, 1000);
+        // clear code selection
+        e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
+      });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        // For code content inside modals, clipBoardJS needs to be initialized with a container option
+        // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
+        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+        var mailtoRegex = new RegExp(/^mailto:/);
+          var filterRegex = new RegExp('/' + window.location.host + '/');
+        var isInternal = (href) => {
+            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+        }
+        // Inspect non-navigation links and adorn them if external
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+        for (var i=0; i<links.length; i++) {
+          const link = links[i];
+          if (!isInternal(link.href)) {
+            // undo the damage that might have been done by quarto-nav.js in the case of
+            // links that we want to consider external
+            if (link.dataset.originalHref !== undefined) {
+              link.href = link.dataset.originalHref;
+            }
+          }
+        }
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+        const config = {
+          allowHTML: true,
+          maxWidth: 500,
+          delay: 100,
+          arrow: false,
+          appendTo: function(el) {
+              return el.closest('section.slide') || el.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start',
+        };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
+          config['offset'] = [0,0];
+          config['maxWidth'] = 700;
+        window.tippy(el, config); 
+      }
+      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+      for (var i=0; i<noterefs.length; i++) {
+        const ref = noterefs[i];
+        tippyHover(ref, function() {
+          // use id or data attribute instead here
+          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+          try { href = new URL(href).hash; } catch {}
+          const id = href.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note) {
+            return note.innerHTML;
+          } else {
+            return "";
+          }
+        });
+      }
+      const findCites = (el) => {
+        const parentEl = el.parentElement;
+        if (parentEl) {
+          const cites = parentEl.dataset.cites;
+          if (cites) {
+            return {
+              el,
+              cites: cites.split(' ')
+            };
+          } else {
+            return findCites(el.parentElement)
+          }
+        } else {
+          return undefined;
+        }
+      };
+      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+      for (var i=0; i<bibliorefs.length; i++) {
+        const ref = bibliorefs[i];
+        const citeInfo = findCites(ref);
+        if (citeInfo) {
+          tippyHover(citeInfo.el, function() {
+            var popup = window.document.createElement('div');
+            citeInfo.cites.forEach(function(cite) {
+              var citeDiv = window.document.createElement('div');
+              citeDiv.classList.add('hanging-indent');
+              citeDiv.classList.add('csl-entry');
+              var biblioDiv = window.document.getElementById('ref-' + cite);
+              if (biblioDiv) {
+                citeDiv.innerHTML = biblioDiv.innerHTML;
+              }
+              popup.appendChild(citeDiv);
+            });
+            return popup.innerHTML;
+          });
+        }
+      }
+    });
+    </script>
+    
+
+</body></html>
