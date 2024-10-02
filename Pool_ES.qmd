@@ -65,7 +65,7 @@ Where:
 
 -   hat_theta_i is the **estimated effect size** for the ( i )-th study.
 
--   w_i is the **weight** for the ( i )-th study, calculated as ( w_i = \frac{1}{v_i} ).
+-   w_i is the **weight** for the ( i )-th study.
 
 -   v_i is the **variance** of the ( i )-th study.
 
@@ -213,7 +213,7 @@ The **Random-Effects Model** accounts for variability among studies, assuming th
 
 ### Formula:
 
-$$\hat{\theta}_k = \mu + \zeta_k + \epsilon_k ;  \quad \mathcal\zeta_k \sim {N}(0, 𝒯_k^2) ; \quad \mathcal\epsilon_k \sim {N}(0, s_k^2)$$
+$$\hat{\theta}_k = \mu + \zeta_k + \epsilon_k ;  \quad \mathcal\zeta_k \sim {N}(0, 𝒯^2) ; \quad \mathcal\epsilon_k \sim {N}(0, s_k^2)$$
 
 -   hat_theta_k: Estimated effect size for study ( k ).
 -   mu : The overall mean (or meta-analytic mean).
@@ -225,7 +225,7 @@ $$\hat{\theta}_k = \mu + \zeta_k + \epsilon_k ;  \quad \mathcal\zeta_k \sim {N}(
 -   The weights are defined as:
 
 $$
-w_i^* = \frac{1}{\sigma^2 + \tau^2}
+w_i^* = \frac{1}{s_k^2 + \tau^2}
 $$
 
 Where:
@@ -250,7 +250,7 @@ Where:
 
     -   I² is calculated from the Q statistic:
 
-    $$  I² = 100\% \times \frac{\tau^2}{\tau^2 + s_k^2}$$
+    $$  I² = 100\% \times \frac{\tau^2}{\tau^2 + s^2}$$
 
     Where: 𝒯\^2 is the between-study variance. sk2is the within study variance
 
@@ -445,6 +445,23 @@ shinyApp(ui = ui, server = server)
 
 ### ![](images/random_model.png){fig-align="center"}
 
+## When a Two-Level Model Falls Short {.smaller}
+
+1. **Does Not Handle Nested Data**:
+   - Ignores study-level clustering (e.g., multiple outcomes or time points within a study).
+
+2. **Overlooks Between-Group Variability**:
+   - Cannot account for variability across different study groups (e.g., regions, experimental designs).
+
+3. **Simplified Heterogeneity Structure**:
+   - Assumes a single \(\tau^2\), ignoring differences in heterogeneity across subgroups.
+
+4. **Reduced Power with Small \(k\)**:
+   - Two-level models struggle to detect variance components when \(k\) (number of studies) is small.
+
+5. **Ignores Dependency Structures**:
+   - Cannot model dependencies between subgroups or repeated measures.
+
 ## Three-Level Meta-Analytic Model {.smaller}
 
 Overview
@@ -452,35 +469,47 @@ Overview
 Three-level meta-analysis extends the traditional random-effects model by incorporating an additional level to account for dependencies in the data, such as multiple effect sizes within studies. This approach models the variability at three levels:
 
 1.  **Level 1**: Sampling variability within effect sizes.
-2.  **Level 2**: Variability between effect sizes within studies.
+2.  **Level 2**: Variability between effect sizes within group
 3.  **Level 3**: Variability between studies.
 
 ### Purpose of the Model {.smaller}
 
 The three-level model is ideal for datasets with hierarchical structures, allowing for accurate estimation of variance components and avoiding underestimation of standard errors. This model is frequently used when there are multiple outcomes per study or when primary studies include repeated measures.
 
-## Three-Level Meta-Analytic Model {.smaller}
+## Three-Level Meta-Analytic Model {.smaller .scrollable}
 
 ### Formula
 
-$$\hat{\theta}_{ij} = \mu + u_k + \zeta_{kj} + \epsilon_{kj}$$
+$$\hat{\theta}_{ij} = \mu + \zeta_{(2)ij} + \zeta_{(3)j} + \epsilon_{ij}$$
 
-$$u_j \sim N(0, \tau_1^2); \quad \zeta_{ij} \sim N(0, \tau_2^2); \quad \epsilon_{ij} \sim N(0, s_{kj}^2)$$
+$$\zeta_{(2)ij} \sim N(0, \tau_1^2); \quad \zeta_{(3)j} \sim N(0, \tau_2^2); \quad \epsilon_{ij} \sim N(0, s_{ij}^2)$$
 
 Where:
 
--   hat_theta_kj: Estimated effect size for the ( k )-th effect size in the ( j )-th study.
+-   hat_theta_ikj: Estimated effect size for the i-th effect size in the j-th cluster
 -   mu: The overall mean effect size.
--   u_k: Random effect for study ( k ), with ( \tau\_1\^2 ) as the between-study variance.
--   zeta\_{kj}: Random effect for effect size ( k ) within study ( j )
--   epsilon_kj: Error term, with ( v\_{kj} ) representing the sampling variance.
+-   \zeta_{(2)ij}: within-cluster heterogeneity 
+ - \zeta_{(3)j}: between-cluster heterogeneity
+-   epsilon_ikj: Error term, with ( v\_{ij} ) representing the sampling variance.
+
+
+
+<br>
+<br>
+<br>
+
+Cependant, si on reformule le modèle pour considérer un effet moyen spécifique à chaque groupe \(\kappa_j\), la notation devient :
+
+$$theta_{ij} = \kappa_j + \zeta^{(2)}_{ij} + \epsilon_{ij}, \quad \text{avec} \quad \kappa_j = \mu + \zeta^{(3)}_j$$
+
+$$Dans ce cas, (kappa_j)  est l'effet moyen du groupe (j), et (\zeta^{(2)}_{ij} \sim N(0, \tau^2_2)\ reste centré autour de \(\kappa_j\).$$
 
 ## Three level random effect model: weights
 
 . - Weights for individual effect sizes are defined as:
 
 $$
-w_{ij} = \frac{1}{\tau_1^2 + \tau_2^2 + v_{ij}}
+w_{ij} = \frac{1}{\tau_1^2 + \tau_2^2 + s_{ij}^2}
 $$
 
 ## Three level random effect model
@@ -506,15 +535,15 @@ ui <- fluidPage(
   sidebarLayout(
     sidebarPanel(
       sliderInput("sd_true", "Standard Deviation of True Effect Size:",
-                  min = 0, max = 1, value = 0.05, step = 0.01),
+                  min = 0, max = 1, value = 0, step = 0.01,),
       sliderInput("sd_sampling", "Standard Deviation of Sampling Error:",
-                  min = 0, max = 1, value = 0.2, step = 0.01),
+                  min = 0, max = 1, value = 0, step = 0.01),
       sliderInput("sd_group", "Standard Deviation of Group Effect:",
-                  min = 0, max = 1, value = 0.15, step = 0.01),  # New slider for group effect variance
+                  min = 0, max = 1, value = 0, step = 0.01),  # New slider for group effect variance
       sliderInput("n_studies", "Number of Studies:",
-                  min = 3, max = 15, value = 10, step = 1),
+                  min = 3, max = 15, value = 3, step = 1),
       sliderInput("n_groups", "Number of Groups:",
-                  min = 2, max = 5, value = 3, step = 1),
+                  min = 2, max = 5, value = 2, step = 1),
       checkboxInput("show_mean", "Show mean without sample error", value = TRUE)
     ),
     
@@ -548,16 +577,19 @@ server <- function(input, output) {
     ) %>% arrange(group) %>% mutate(study = paste("Study", 1:n_studies))
 
     # Generate random group effects and add to the true effect sizes
-    group_effects <- rnorm(n_groups, mean = 0, sd = sd_group)
+       tmp1<- rnorm(n_groups - 1, mean = 0, sd = sd_group)
+    group_effects <- c(tmp1,-sum(tmp1))
     studies$group_effect <- group_effects[studies$group]
     
     # Generate true effect sizes with associated group and sampling error
     studies$group_effect<- studies$group_effect+  true_effect_size
-    studies$mean_1 <- studies$group_effect+ rnorm(n_studies, mean = 0, sd = sd_true)   
+    tmp<- rnorm(n_studies - 1, mean = 0, sd = sd_true)
+    studies$mean_1 <- studies$group_effect+ c(tmp,-sum(tmp))
+    
     studies$mean_ratio <- studies$mean_1 + rnorm(n_studies, mean = 0, sd = sd_sampling)
     
     # Generate standard errors from a truncated normal distribution
-    studies$se <- rtruncnorm(n_studies, a = 0, mean = 0.2, sd = 0.1)
+    studies$se <-0.01+sd_sampling* rtruncnorm(n_studies, a = 0, mean = 0.1, sd = 0.1)
     
     # Calculate confidence intervals
     studies$ci_lower <- studies$mean_ratio - 1.96 * studies$se

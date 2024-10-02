@@ -524,23 +524,27 @@ Reduce sampling error to produce accurate estimates that are as close as possibl
 <span id="cb1-37"><a href=""></a>        </span>
 <span id="cb1-38"><a href=""></a>        # Create data frame for plotting</span>
 <span id="cb1-39"><a href=""></a>        df &lt;- data.frame(value = sample_data)</span>
-<span id="cb1-40"><a href=""></a>        </span>
-<span id="cb1-41"><a href=""></a>        # Plot density</span>
-<span id="cb1-42"><a href=""></a>        p &lt;- ggplot(df, aes(x = value)) +</span>
-<span id="cb1-43"><a href=""></a>            geom_density(fill = "blue", alpha = 0.5) +</span>
-<span id="cb1-44"><a href=""></a>            geom_vline(aes(xintercept = mu), color = "red", linetype = "dashed", size = 1) +</span>
-<span id="cb1-45"><a href=""></a>            labs(title = paste("Sample Size:", sample_size),</span>
-<span id="cb1-46"><a href=""></a>                 x = "Value",</span>
-<span id="cb1-47"><a href=""></a>                 y = "Density") +</span>
-<span id="cb1-48"><a href=""></a>            theme_minimal()</span>
-<span id="cb1-49"><a href=""></a>        </span>
-<span id="cb1-50"><a href=""></a>        ggplotly(p)</span>
-<span id="cb1-51"><a href=""></a>    })</span>
-<span id="cb1-52"><a href=""></a>}</span>
-<span id="cb1-53"><a href=""></a></span>
-<span id="cb1-54"><a href=""></a># Run the application </span>
-<span id="cb1-55"><a href=""></a>shinyApp(ui = ui, server = server)</span>
-<span id="cb1-56"><a href=""></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-40"><a href=""></a>        MEAN &lt;- round(as.numeric(mean(df$value)))</span>
+<span id="cb1-41"><a href=""></a>        SD &lt;- round(as.numeric(sd(df$value)))</span>
+<span id="cb1-42"><a href=""></a>        </span>
+<span id="cb1-43"><a href=""></a>        # Plot density</span>
+<span id="cb1-44"><a href=""></a>        p &lt;- ggplot(df, aes(x = value)) +</span>
+<span id="cb1-45"><a href=""></a>            geom_density(fill = "blue", alpha = 0.5) +</span>
+<span id="cb1-46"><a href=""></a>            geom_vline(aes(xintercept = mu), color = "red", linetype = "dashed", size = 1) +</span>
+<span id="cb1-47"><a href=""></a>            labs(title = paste("Sample Size:", sample_size,</span>
+<span id="cb1-48"><a href=""></a>                               "mean", MEAN,</span>
+<span id="cb1-49"><a href=""></a>                               "sd", SD),</span>
+<span id="cb1-50"><a href=""></a>                 x = "Value",</span>
+<span id="cb1-51"><a href=""></a>                 y = "Density") +</span>
+<span id="cb1-52"><a href=""></a>            theme_minimal()</span>
+<span id="cb1-53"><a href=""></a>        </span>
+<span id="cb1-54"><a href=""></a>        ggplotly(p)</span>
+<span id="cb1-55"><a href=""></a>    })</span>
+<span id="cb1-56"><a href=""></a>}</span>
+<span id="cb1-57"><a href=""></a></span>
+<span id="cb1-58"><a href=""></a># Run the application </span>
+<span id="cb1-59"><a href=""></a>shinyApp(ui = ui, server = server)</span>
+<span id="cb1-60"><a href=""></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="an-effect-size-for-all-your-needs" class="slide level2">
 <h2>An Effect Size for All Your Needs</h2>
@@ -549,9 +553,6 @@ Reduce sampling error to produce accurate estimates that are as close as possibl
 </section>
 <section id="an-effect-size-for-all-your-needs-1" class="slide level2 smaller">
 <h2>An Effect Size for All Your Needs</h2>
-<ul>
-<li>Continuous outcomes</li>
-</ul>
 <table class="caption-top">
 <colgroup>
 <col style="width: 43%">
@@ -589,16 +590,10 @@ Reduce sampling error to produce accurate estimates that are as close as possibl
 </section>
 <section id="an-effect-size-for-all-your-needs-2" class="slide level2 smaller">
 <h2>An Effect Size for All Your Needs</h2>
-<ul>
-<li>Continuous outcomes</li>
-</ul>
 
 <img data-src="images/conversion_ES.png" class="quarto-figure quarto-figure-center r-stretch"></section>
 <section id="an-effect-size-for-all-your-needs-3" class="slide level2 smaller">
 <h2>An Effect Size for All Your Needs</h2>
-<ul>
-<li>Discrete outcomes</li>
-</ul>
 <table class="caption-top">
 <colgroup>
 <col style="width: 40%">
@@ -893,7 +888,7 @@ SE_{\ln R} = SD_{\text{pooled}} \sqrt{ \left( \frac{1}{n_1 \cdot (X_1)^2} \right
 <span id="cb2-8"><a href=""></a>generate_data &lt;- function(n, correlation_target) {</span>
 <span id="cb2-9"><a href=""></a>  correlations &lt;- replicate(n, {</span>
 <span id="cb2-10"><a href=""></a>    x &lt;- rnorm(20, mean = 10, sd = 1)  # Variable indépendante</span>
-<span id="cb2-11"><a href=""></a>    y &lt;- correlation_target * x + rnorm(20, mean = 0, sd = sqrt(1 - correlation_target^2))  # Variable dépendante</span>
+<span id="cb2-11"><a href=""></a>    y &lt;- correlation_target * x + rnorm(10, mean = 0, sd = sqrt(1 - correlation_target^2))  # Variable dépendante</span>
 <span id="cb2-12"><a href=""></a>    cor(x, y)  # Calcul de la corrélation</span>
 <span id="cb2-13"><a href=""></a>  })</span>
 <span id="cb2-14"><a href=""></a>  </span>
@@ -946,17 +941,18 @@ SE_{\ln R} = SD_{\text{pooled}} \sqrt{ \left( \frac{1}{n_1 \cdot (X_1)^2} \right
 <span id="cb2-61"><a href=""></a>            ylab("Densité") +</span>
 <span id="cb2-62"><a href=""></a>            theme_minimal() +</span>
 <span id="cb2-63"><a href=""></a>            scale_color_manual(name = "Légende", values = c("lightblue" = "Brutes", "red" = "Fisher", "green" = "Normale")) +</span>
-<span id="cb2-64"><a href=""></a>            labs(color = "Type de Densité")</span>
-<span id="cb2-65"><a href=""></a>        </span>
-<span id="cb2-66"><a href=""></a>        # Convertir ggplot en plotly</span>
-<span id="cb2-67"><a href=""></a>        ggplotly(p)</span>
-<span id="cb2-68"><a href=""></a>    })</span>
-<span id="cb2-69"><a href=""></a>}</span>
-<span id="cb2-70"><a href=""></a></span>
-<span id="cb2-71"><a href=""></a># Lancer l'application</span>
-<span id="cb2-72"><a href=""></a>shinyApp(ui = ui, server = server)</span>
-<span id="cb2-73"><a href=""></a></span>
-<span id="cb2-74"><a href=""></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-64"><a href=""></a>            labs(color = "Type de Densité")+</span>
+<span id="cb2-65"><a href=""></a>          xlim(-3,3)</span>
+<span id="cb2-66"><a href=""></a>        </span>
+<span id="cb2-67"><a href=""></a>        # Convertir ggplot en plotly</span>
+<span id="cb2-68"><a href=""></a>        ggplotly(p)</span>
+<span id="cb2-69"><a href=""></a>    })</span>
+<span id="cb2-70"><a href=""></a>}</span>
+<span id="cb2-71"><a href=""></a></span>
+<span id="cb2-72"><a href=""></a># Lancer l'application</span>
+<span id="cb2-73"><a href=""></a>shinyApp(ui = ui, server = server)</span>
+<span id="cb2-74"><a href=""></a></span>
+<span id="cb2-75"><a href=""></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="fishers-transformation" class="slide level2 smaller">
 <h2>Fisher’s Transformation</h2>

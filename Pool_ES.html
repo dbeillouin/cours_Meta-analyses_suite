@@ -15,7 +15,7 @@
 <link href="Pool_ES_files/libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.5.57">
 
-  <title>cours_effect_size</title>
+  <title>How to calculate and combine effect-sizes?</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -403,7 +403,7 @@
     <div class="slides">
 
 <section id="title-slide" data-background-image="elephant.png" data-background-position="90% 80%" data-background-size="25%" class="quarto-title-block center">
-  <h1 class="title">cours_effect_size</h1>
+  <h1 class="title">How to calculate and combine effect-sizes?</h1>
   <p class="subtitle">September 2024</p>
 
 <div class="quarto-title-authors">
@@ -442,7 +442,7 @@ Damien Beillouin <br> CIRAD-Hortsys
 <ul>
 <li><p>bar_theta_w is the <strong>weighted average effect size</strong> across ( k ) studies.</p></li>
 <li><p>hat_theta_i is the <strong>estimated effect size</strong> for the ( i )-th study.</p></li>
-<li><p>w_i is the <strong>weight</strong> for the ( i )-th study, calculated as ( w_i = ).</p></li>
+<li><p>w_i is the <strong>weight</strong> for the ( i )-th study.</p></li>
 <li><p>v_i is the <strong>variance</strong> of the ( i )-th study.</p>
 <p>and with weights equal to 𝑤𝑖=1/𝑣𝑖</p></li>
 </ul>
@@ -582,7 +582,7 @@ Damien Beillouin <br> CIRAD-Hortsys
 <h2>Random-Effects Model</h2>
 <p>The <strong>Random-Effects Model</strong> accounts for variability among studies, assuming that effect sizes vary due to different study conditions.</p>
 <h3 id="formula-1">Formula:</h3>
-<p><span class="math display">\[\hat{\theta}_k = \mu + \zeta_k + \epsilon_k ;  \quad \mathcal\zeta_k \sim {N}(0, 𝒯_k^2) ; \quad \mathcal\epsilon_k \sim {N}(0, s_k^2)\]</span></p>
+<p><span class="math display">\[\hat{\theta}_k = \mu + \zeta_k + \epsilon_k ;  \quad \mathcal\zeta_k \sim {N}(0, 𝒯^2) ; \quad \mathcal\epsilon_k \sim {N}(0, s_k^2)\]</span></p>
 <ul>
 <li>hat_theta_k: Estimated effect size for study ( k ).</li>
 <li>mu : The overall mean (or meta-analytic mean).</li>
@@ -596,7 +596,7 @@ Damien Beillouin <br> CIRAD-Hortsys
 <li>The weights are defined as:</li>
 </ul>
 <p><span class="math display">\[
-w_i^* = \frac{1}{\sigma^2 + \tau^2}
+w_i^* = \frac{1}{s_k^2 + \tau^2}
 \]</span></p>
 <p>Where:</p>
 <ul>
@@ -622,7 +622,7 @@ w_i^* = \frac{1}{\sigma^2 + \tau^2}
 <ul>
 <li>I² is calculated from the Q statistic:</li>
 </ul>
-<p><span class="math display">\[  I² = 100\% \times \frac{\tau^2}{\tau^2 + s_k^2}\]</span></p>
+<p><span class="math display">\[  I² = 100\% \times \frac{\tau^2}{\tau^2 + s^2}\]</span></p>
 <p>Where: 𝒯^2 is the between-study variance. sk2is the within study variance</p></li>
 </ul>
 </section>
@@ -819,37 +819,66 @@ w_i^* = \frac{1}{\sigma^2 + \tau^2}
 <h2>Mixed Model Estimation</h2>
 <h3 id="section"><img data-src="images/random_model.png" class="quarto-figure quarto-figure-center"></h3>
 </section>
+<section id="when-a-two-level-model-falls-short" class="slide level2 smaller">
+<h2>When a Two-Level Model Falls Short</h2>
+<ol type="1">
+<li><strong>Does Not Handle Nested Data</strong>:
+<ul>
+<li>Ignores study-level clustering (e.g., multiple outcomes or time points within a study).</li>
+</ul></li>
+<li><strong>Overlooks Between-Group Variability</strong>:
+<ul>
+<li>Cannot account for variability across different study groups (e.g., regions, experimental designs).</li>
+</ul></li>
+<li><strong>Simplified Heterogeneity Structure</strong>:
+<ul>
+<li>Assumes a single (^2), ignoring differences in heterogeneity across subgroups.</li>
+</ul></li>
+<li><strong>Reduced Power with Small (k)</strong>:
+<ul>
+<li>Two-level models struggle to detect variance components when (k) (number of studies) is small.</li>
+</ul></li>
+<li><strong>Ignores Dependency Structures</strong>:
+<ul>
+<li>Cannot model dependencies between subgroups or repeated measures.</li>
+</ul></li>
+</ol>
+</section>
 <section id="three-level-meta-analytic-model" class="slide level2 smaller">
 <h2>Three-Level Meta-Analytic Model</h2>
 <p>Overview</p>
 <p>Three-level meta-analysis extends the traditional random-effects model by incorporating an additional level to account for dependencies in the data, such as multiple effect sizes within studies. This approach models the variability at three levels:</p>
 <ol type="1">
 <li><strong>Level 1</strong>: Sampling variability within effect sizes.</li>
-<li><strong>Level 2</strong>: Variability between effect sizes within studies.</li>
+<li><strong>Level 2</strong>: Variability between effect sizes within group</li>
 <li><strong>Level 3</strong>: Variability between studies.</li>
 </ol>
 <h3 class="smaller" id="purpose-of-the-model">Purpose of the Model</h3>
 <p>The three-level model is ideal for datasets with hierarchical structures, allowing for accurate estimation of variance components and avoiding underestimation of standard errors. This model is frequently used when there are multiple outcomes per study or when primary studies include repeated measures.</p>
 </section>
-<section id="three-level-meta-analytic-model-1" class="slide level2 smaller">
+<section id="three-level-meta-analytic-model-1" class="slide level2 smaller scrollable">
 <h2>Three-Level Meta-Analytic Model</h2>
 <h3 id="formula-2">Formula</h3>
-<p><span class="math display">\[\hat{\theta}_{ij} = \mu + u_k + \zeta_{kj} + \epsilon_{kj}\]</span></p>
-<p><span class="math display">\[u_j \sim N(0, \tau_1^2); \quad \zeta_{ij} \sim N(0, \tau_2^2); \quad \epsilon_{ij} \sim N(0, s_{kj}^2)\]</span></p>
+<p><span class="math display">\[\hat{\theta}_{ij} = \mu + \zeta_{(2)ij} + \zeta_{(3)j} + \epsilon_{ij}\]</span></p>
+<p><span class="math display">\[\zeta_{(2)ij} \sim N(0, \tau_1^2); \quad \zeta_{(3)j} \sim N(0, \tau_2^2); \quad \epsilon_{ij} \sim N(0, s_{ij}^2)\]</span></p>
 <p>Where:</p>
 <ul>
-<li>hat_theta_kj: Estimated effect size for the ( k )-th effect size in the ( j )-th study.</li>
+<li>hat_theta_ikj: Estimated effect size for the i-th effect size in the j-th cluster</li>
 <li>mu: The overall mean effect size.</li>
-<li>u_k: Random effect for study ( k ), with ( _1^2 ) as the between-study variance.</li>
-<li>zeta_{kj}: Random effect for effect size ( k ) within study ( j )</li>
-<li>epsilon_kj: Error term, with ( v_{kj} ) representing the sampling variance.</li>
+<li>_{(2)ij}: within-cluster heterogeneity</li>
+<li>_{(3)j}: between-cluster heterogeneity</li>
+<li>epsilon_ikj: Error term, with ( v_{ij} ) representing the sampling variance.</li>
 </ul>
+<p><br> <br> <br></p>
+<p>Cependant, si on reformule le modèle pour considérer un effet moyen spécifique à chaque groupe (_j), la notation devient :</p>
+<p><span class="math display">\[theta_{ij} = \kappa_j + \zeta^{(2)}_{ij} + \epsilon_{ij}, \quad \text{avec} \quad \kappa_j = \mu + \zeta^{(3)}_j\]</span></p>
+<p><span class="math display">\[Dans ce cas, (kappa_j)  est l'effet moyen du groupe (j), et (\zeta^{(2)}_{ij} \sim N(0, \tau^2_2)\ reste centré autour de \(\kappa_j\).\]</span></p>
 </section>
 <section id="three-level-random-effect-model-weights" class="slide level2">
 <h2>Three level random effect model: weights</h2>
 <p>. - Weights for individual effect sizes are defined as:</p>
 <p><span class="math display">\[
-w_{ij} = \frac{1}{\tau_1^2 + \tau_2^2 + v_{ij}}
+w_{ij} = \frac{1}{\tau_1^2 + \tau_2^2 + s_{ij}^2}
 \]</span></p>
 </section>
 <section id="three-level-random-effect-model" class="slide level2">
@@ -873,15 +902,15 @@ w_{ij} = \frac{1}{\tau_1^2 + \tau_2^2 + v_{ij}}
 <span id="cb3-16"><a href=""></a>  sidebarLayout(</span>
 <span id="cb3-17"><a href=""></a>    sidebarPanel(</span>
 <span id="cb3-18"><a href=""></a>      sliderInput("sd_true", "Standard Deviation of True Effect Size:",</span>
-<span id="cb3-19"><a href=""></a>                  min = 0, max = 1, value = 0.05, step = 0.01),</span>
+<span id="cb3-19"><a href=""></a>                  min = 0, max = 1, value = 0, step = 0.01,),</span>
 <span id="cb3-20"><a href=""></a>      sliderInput("sd_sampling", "Standard Deviation of Sampling Error:",</span>
-<span id="cb3-21"><a href=""></a>                  min = 0, max = 1, value = 0.2, step = 0.01),</span>
+<span id="cb3-21"><a href=""></a>                  min = 0, max = 1, value = 0, step = 0.01),</span>
 <span id="cb3-22"><a href=""></a>      sliderInput("sd_group", "Standard Deviation of Group Effect:",</span>
-<span id="cb3-23"><a href=""></a>                  min = 0, max = 1, value = 0.15, step = 0.01),  # New slider for group effect variance</span>
+<span id="cb3-23"><a href=""></a>                  min = 0, max = 1, value = 0, step = 0.01),  # New slider for group effect variance</span>
 <span id="cb3-24"><a href=""></a>      sliderInput("n_studies", "Number of Studies:",</span>
-<span id="cb3-25"><a href=""></a>                  min = 3, max = 15, value = 10, step = 1),</span>
+<span id="cb3-25"><a href=""></a>                  min = 3, max = 15, value = 3, step = 1),</span>
 <span id="cb3-26"><a href=""></a>      sliderInput("n_groups", "Number of Groups:",</span>
-<span id="cb3-27"><a href=""></a>                  min = 2, max = 5, value = 3, step = 1),</span>
+<span id="cb3-27"><a href=""></a>                  min = 2, max = 5, value = 2, step = 1),</span>
 <span id="cb3-28"><a href=""></a>      checkboxInput("show_mean", "Show mean without sample error", value = TRUE)</span>
 <span id="cb3-29"><a href=""></a>    ),</span>
 <span id="cb3-30"><a href=""></a>    </span>
@@ -915,71 +944,74 @@ w_{ij} = \frac{1}{\tau_1^2 + \tau_2^2 + v_{ij}}
 <span id="cb3-58"><a href=""></a>    ) %&gt;% arrange(group) %&gt;% mutate(study = paste("Study", 1:n_studies))</span>
 <span id="cb3-59"><a href=""></a></span>
 <span id="cb3-60"><a href=""></a>    # Generate random group effects and add to the true effect sizes</span>
-<span id="cb3-61"><a href=""></a>    group_effects &lt;- rnorm(n_groups, mean = 0, sd = sd_group)</span>
-<span id="cb3-62"><a href=""></a>    studies$group_effect &lt;- group_effects[studies$group]</span>
-<span id="cb3-63"><a href=""></a>    </span>
-<span id="cb3-64"><a href=""></a>    # Generate true effect sizes with associated group and sampling error</span>
-<span id="cb3-65"><a href=""></a>    studies$group_effect&lt;- studies$group_effect+  true_effect_size</span>
-<span id="cb3-66"><a href=""></a>    studies$mean_1 &lt;- studies$group_effect+ rnorm(n_studies, mean = 0, sd = sd_true)   </span>
-<span id="cb3-67"><a href=""></a>    studies$mean_ratio &lt;- studies$mean_1 + rnorm(n_studies, mean = 0, sd = sd_sampling)</span>
-<span id="cb3-68"><a href=""></a>    </span>
-<span id="cb3-69"><a href=""></a>    # Generate standard errors from a truncated normal distribution</span>
-<span id="cb3-70"><a href=""></a>    studies$se &lt;- rtruncnorm(n_studies, a = 0, mean = 0.2, sd = 0.1)</span>
+<span id="cb3-61"><a href=""></a>       tmp1&lt;- rnorm(n_groups - 1, mean = 0, sd = sd_group)</span>
+<span id="cb3-62"><a href=""></a>    group_effects &lt;- c(tmp1,-sum(tmp1))</span>
+<span id="cb3-63"><a href=""></a>    studies$group_effect &lt;- group_effects[studies$group]</span>
+<span id="cb3-64"><a href=""></a>    </span>
+<span id="cb3-65"><a href=""></a>    # Generate true effect sizes with associated group and sampling error</span>
+<span id="cb3-66"><a href=""></a>    studies$group_effect&lt;- studies$group_effect+  true_effect_size</span>
+<span id="cb3-67"><a href=""></a>    tmp&lt;- rnorm(n_studies - 1, mean = 0, sd = sd_true)</span>
+<span id="cb3-68"><a href=""></a>    studies$mean_1 &lt;- studies$group_effect+ c(tmp,-sum(tmp))</span>
+<span id="cb3-69"><a href=""></a>    </span>
+<span id="cb3-70"><a href=""></a>    studies$mean_ratio &lt;- studies$mean_1 + rnorm(n_studies, mean = 0, sd = sd_sampling)</span>
 <span id="cb3-71"><a href=""></a>    </span>
-<span id="cb3-72"><a href=""></a>    # Calculate confidence intervals</span>
-<span id="cb3-73"><a href=""></a>    studies$ci_lower &lt;- studies$mean_ratio - 1.96 * studies$se</span>
-<span id="cb3-74"><a href=""></a>    studies$ci_upper &lt;- studies$mean_ratio + 1.96 * studies$se</span>
-<span id="cb3-75"><a href=""></a>    studies$color &lt;- 2</span>
-<span id="cb3-76"><a href=""></a>    </span>
-<span id="cb3-77"><a href=""></a>    # Calculate overall effect size using a three-level model</span>
-<span id="cb3-78"><a href=""></a>    random_effect &lt;- rma.mv(yi = mean_ratio, V = se^2, random = ~ 1 | group/study, data = studies)</span>
+<span id="cb3-72"><a href=""></a>    # Generate standard errors from a truncated normal distribution</span>
+<span id="cb3-73"><a href=""></a>    studies$se &lt;-0.01+sd_sampling* rtruncnorm(n_studies, a = 0, mean = 0.1, sd = 0.1)</span>
+<span id="cb3-74"><a href=""></a>    </span>
+<span id="cb3-75"><a href=""></a>    # Calculate confidence intervals</span>
+<span id="cb3-76"><a href=""></a>    studies$ci_lower &lt;- studies$mean_ratio - 1.96 * studies$se</span>
+<span id="cb3-77"><a href=""></a>    studies$ci_upper &lt;- studies$mean_ratio + 1.96 * studies$se</span>
+<span id="cb3-78"><a href=""></a>    studies$color &lt;- 2</span>
 <span id="cb3-79"><a href=""></a>    </span>
-<span id="cb3-80"><a href=""></a>    # Create summary table for the overall effect size</span>
-<span id="cb3-81"><a href=""></a>    summary_table &lt;- data.frame(</span>
-<span id="cb3-82"><a href=""></a>      study = "Overall_random_effect",</span>
-<span id="cb3-83"><a href=""></a>      n = NA,</span>
-<span id="cb3-84"><a href=""></a>      group = NA,</span>
-<span id="cb3-85"><a href=""></a>      mean_1 = NA,</span>
-<span id="cb3-86"><a href=""></a>      group_effect = NA,</span>
-<span id="cb3-87"><a href=""></a>      mean_ratio = random_effect$b,</span>
-<span id="cb3-88"><a href=""></a>      se = NA,</span>
-<span id="cb3-89"><a href=""></a>      ci_lower = random_effect$ci.lb,</span>
-<span id="cb3-90"><a href=""></a>      ci_upper = random_effect$ci.ub,</span>
-<span id="cb3-91"><a href=""></a>      color = 1</span>
-<span id="cb3-92"><a href=""></a>    )</span>
-<span id="cb3-93"><a href=""></a>    </span>
-<span id="cb3-94"><a href=""></a>    # Combine study data with overall effect size</span>
-<span id="cb3-95"><a href=""></a>    plot_data &lt;- rbind(studies, summary_table)</span>
+<span id="cb3-80"><a href=""></a>    # Calculate overall effect size using a three-level model</span>
+<span id="cb3-81"><a href=""></a>    random_effect &lt;- rma.mv(yi = mean_ratio, V = se^2, random = ~ 1 | group/study, data = studies)</span>
+<span id="cb3-82"><a href=""></a>    </span>
+<span id="cb3-83"><a href=""></a>    # Create summary table for the overall effect size</span>
+<span id="cb3-84"><a href=""></a>    summary_table &lt;- data.frame(</span>
+<span id="cb3-85"><a href=""></a>      study = "Overall_random_effect",</span>
+<span id="cb3-86"><a href=""></a>      n = NA,</span>
+<span id="cb3-87"><a href=""></a>      group = NA,</span>
+<span id="cb3-88"><a href=""></a>      mean_1 = NA,</span>
+<span id="cb3-89"><a href=""></a>      group_effect = NA,</span>
+<span id="cb3-90"><a href=""></a>      mean_ratio = random_effect$b,</span>
+<span id="cb3-91"><a href=""></a>      se = NA,</span>
+<span id="cb3-92"><a href=""></a>      ci_lower = random_effect$ci.lb,</span>
+<span id="cb3-93"><a href=""></a>      ci_upper = random_effect$ci.ub,</span>
+<span id="cb3-94"><a href=""></a>      color = 1</span>
+<span id="cb3-95"><a href=""></a>    )</span>
 <span id="cb3-96"><a href=""></a>    </span>
-<span id="cb3-97"><a href=""></a></span>
-<span id="cb3-98"><a href=""></a>  #  Create forest plot</span>
-<span id="cb3-99"><a href=""></a>    p1 &lt;- ggplot(plot_data, aes(x = reorder(study, rev(group)))) +</span>
-<span id="cb3-100"><a href=""></a>      geom_errorbar(aes(ymin = ci_lower, ymax = ci_upper), width = 0.2, size = 1) +</span>
-<span id="cb3-101"><a href=""></a>      geom_point(aes(y = mean_ratio, color = factor(group))) +</span>
-<span id="cb3-102"><a href=""></a>   {if (input$show_mean) geom_point(aes(y = mean_1), color = "red", size = 4, pch = 8)} +</span>
-<span id="cb3-103"><a href=""></a>     {if (input$show_mean) geom_point(aes(y = group_effect), color = "orange", size = 4, pch = 9)} +</span>
-<span id="cb3-104"><a href=""></a>      geom_hline(yintercept = true_effect_size, linetype = "dashed", color = "blue") +</span>
-<span id="cb3-105"><a href=""></a>      labs(title = "Forest Plot: Three-Level Meta-Analysis Model",</span>
-<span id="cb3-106"><a href=""></a>           x = "Studies",</span>
-<span id="cb3-107"><a href=""></a>           y = "Effect Size (Ratio)") +</span>
-<span id="cb3-108"><a href=""></a>      theme_minimal() +</span>
-<span id="cb3-109"><a href=""></a>      theme(legend.position = "none") +</span>
-<span id="cb3-110"><a href=""></a>      coord_flip() +</span>
-<span id="cb3-111"><a href=""></a>      geom_text(aes(x = reorder(study, rev(study)), y = 0.5, label = paste0("Group = ", group, "; n = ", n))) +</span>
-<span id="cb3-112"><a href=""></a>      scale_size_continuous(range = c(2, 5)) +</span>
-<span id="cb3-113"><a href=""></a>      geom_hline(yintercept = true_effect_size, linetype = "dotted", color = "blue")+</span>
-<span id="cb3-114"><a href=""></a>             geom_rect(aes(xmin = -Inf, xmax = Inf,</span>
-<span id="cb3-115"><a href=""></a>                     ymin = true_effect_size - 1.96 * sd_true,</span>
-<span id="cb3-116"><a href=""></a>                     ymax = true_effect_size + 1.96 * sd_true), </span>
-<span id="cb3-117"><a href=""></a>                 fill = "blue", alpha = 0.05)</span>
-<span id="cb3-118"><a href=""></a></span>
-<span id="cb3-119"><a href=""></a>    # Display the forest plot</span>
-<span id="cb3-120"><a href=""></a>    p1</span>
-<span id="cb3-121"><a href=""></a>  })</span>
-<span id="cb3-122"><a href=""></a>}</span>
-<span id="cb3-123"><a href=""></a></span>
-<span id="cb3-124"><a href=""></a># Run the application </span>
-<span id="cb3-125"><a href=""></a>shinyApp(ui = ui, server = server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-97"><a href=""></a>    # Combine study data with overall effect size</span>
+<span id="cb3-98"><a href=""></a>    plot_data &lt;- rbind(studies, summary_table)</span>
+<span id="cb3-99"><a href=""></a>    </span>
+<span id="cb3-100"><a href=""></a></span>
+<span id="cb3-101"><a href=""></a>  #  Create forest plot</span>
+<span id="cb3-102"><a href=""></a>    p1 &lt;- ggplot(plot_data, aes(x = reorder(study, rev(group)))) +</span>
+<span id="cb3-103"><a href=""></a>      geom_errorbar(aes(ymin = ci_lower, ymax = ci_upper), width = 0.2, size = 1) +</span>
+<span id="cb3-104"><a href=""></a>      geom_point(aes(y = mean_ratio, color = factor(group))) +</span>
+<span id="cb3-105"><a href=""></a>   {if (input$show_mean) geom_point(aes(y = mean_1), color = "red", size = 4, pch = 8)} +</span>
+<span id="cb3-106"><a href=""></a>     {if (input$show_mean) geom_point(aes(y = group_effect), color = "orange", size = 4, pch = 9)} +</span>
+<span id="cb3-107"><a href=""></a>      geom_hline(yintercept = true_effect_size, linetype = "dashed", color = "blue") +</span>
+<span id="cb3-108"><a href=""></a>      labs(title = "Forest Plot: Three-Level Meta-Analysis Model",</span>
+<span id="cb3-109"><a href=""></a>           x = "Studies",</span>
+<span id="cb3-110"><a href=""></a>           y = "Effect Size (Ratio)") +</span>
+<span id="cb3-111"><a href=""></a>      theme_minimal() +</span>
+<span id="cb3-112"><a href=""></a>      theme(legend.position = "none") +</span>
+<span id="cb3-113"><a href=""></a>      coord_flip() +</span>
+<span id="cb3-114"><a href=""></a>      geom_text(aes(x = reorder(study, rev(study)), y = 0.5, label = paste0("Group = ", group, "; n = ", n))) +</span>
+<span id="cb3-115"><a href=""></a>      scale_size_continuous(range = c(2, 5)) +</span>
+<span id="cb3-116"><a href=""></a>      geom_hline(yintercept = true_effect_size, linetype = "dotted", color = "blue")+</span>
+<span id="cb3-117"><a href=""></a>             geom_rect(aes(xmin = -Inf, xmax = Inf,</span>
+<span id="cb3-118"><a href=""></a>                     ymin = true_effect_size - 1.96 * sd_true,</span>
+<span id="cb3-119"><a href=""></a>                     ymax = true_effect_size + 1.96 * sd_true), </span>
+<span id="cb3-120"><a href=""></a>                 fill = "blue", alpha = 0.05)</span>
+<span id="cb3-121"><a href=""></a></span>
+<span id="cb3-122"><a href=""></a>    # Display the forest plot</span>
+<span id="cb3-123"><a href=""></a>    p1</span>
+<span id="cb3-124"><a href=""></a>  })</span>
+<span id="cb3-125"><a href=""></a>}</span>
+<span id="cb3-126"><a href=""></a></span>
+<span id="cb3-127"><a href=""></a># Run the application </span>
+<span id="cb3-128"><a href=""></a>shinyApp(ui = ui, server = server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="three-level-random-effect-model-1" class="slide level2">
 <h2>Three level random effect model</h2>

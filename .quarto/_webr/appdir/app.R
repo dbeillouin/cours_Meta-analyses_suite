@@ -14,15 +14,15 @@ ui <- fluidPage(
   sidebarLayout(
     sidebarPanel(
       sliderInput("sd_true", "Standard Deviation of True Effect Size:",
-                  min = 0, max = 1, value = 0.05, step = 0.01),
+                  min = 0, max = 1, value = 0, step = 0.01,),
       sliderInput("sd_sampling", "Standard Deviation of Sampling Error:",
-                  min = 0, max = 1, value = 0.2, step = 0.01),
+                  min = 0, max = 1, value = 0, step = 0.01),
       sliderInput("sd_group", "Standard Deviation of Group Effect:",
-                  min = 0, max = 1, value = 0.15, step = 0.01),  # New slider for group effect variance
+                  min = 0, max = 1, value = 0, step = 0.01),  # New slider for group effect variance
       sliderInput("n_studies", "Number of Studies:",
-                  min = 3, max = 15, value = 10, step = 1),
+                  min = 3, max = 15, value = 3, step = 1),
       sliderInput("n_groups", "Number of Groups:",
-                  min = 2, max = 5, value = 3, step = 1),
+                  min = 2, max = 5, value = 2, step = 1),
       checkboxInput("show_mean", "Show mean without sample error", value = TRUE)
     ),
     
@@ -56,16 +56,19 @@ server <- function(input, output) {
     ) %>% arrange(group) %>% mutate(study = paste("Study", 1:n_studies))
 
     # Generate random group effects and add to the true effect sizes
-    group_effects <- rnorm(n_groups, mean = 0, sd = sd_group)
+       tmp1<- rnorm(n_groups - 1, mean = 0, sd = sd_group)
+    group_effects <- c(tmp1,-sum(tmp1))
     studies$group_effect <- group_effects[studies$group]
     
     # Generate true effect sizes with associated group and sampling error
     studies$group_effect<- studies$group_effect+  true_effect_size
-    studies$mean_1 <- studies$group_effect+ rnorm(n_studies, mean = 0, sd = sd_true)   
+    tmp<- rnorm(n_studies - 1, mean = 0, sd = sd_true)
+    studies$mean_1 <- studies$group_effect+ c(tmp,-sum(tmp))
+    
     studies$mean_ratio <- studies$mean_1 + rnorm(n_studies, mean = 0, sd = sd_sampling)
     
     # Generate standard errors from a truncated normal distribution
-    studies$se <- rtruncnorm(n_studies, a = 0, mean = 0.2, sd = 0.1)
+    studies$se <-0.01+sd_sampling* rtruncnorm(n_studies, a = 0, mean = 0.1, sd = 0.1)
     
     # Calculate confidence intervals
     studies$ci_lower <- studies$mean_ratio - 1.96 * studies$se

@@ -148,12 +148,16 @@ server <- function(input, output) {
         
         # Create data frame for plotting
         df <- data.frame(value = sample_data)
+        MEAN <- round(as.numeric(mean(df$value)))
+        SD <- round(as.numeric(sd(df$value)))
         
         # Plot density
         p <- ggplot(df, aes(x = value)) +
             geom_density(fill = "blue", alpha = 0.5) +
             geom_vline(aes(xintercept = mu), color = "red", linetype = "dashed", size = 1) +
-            labs(title = paste("Sample Size:", sample_size),
+            labs(title = paste("Sample Size:", sample_size,
+                               "mean", MEAN,
+                               "sd", SD),
                  x = "Value",
                  y = "Density") +
             theme_minimal()
@@ -176,7 +180,6 @@ Depending on your experimental design, research question, and the type of outcom
 
 ## An Effect Size for All Your Needs {.smaller}
 
--   Continuous outcomes
 
 | **Effect Type**             | **Description**                                                    |
 |-------------------------------|-----------------------------------------|
@@ -188,13 +191,10 @@ Depending on your experimental design, research question, and the type of outcom
 
 ## An Effect Size for All Your Needs {.smaller}
 
--   Continuous outcomes
 
 ![](images/conversion_ES.png){fig-align="center"}
 
 ## An Effect Size for All Your Needs {.smaller}
-
--   Discrete outcomes
 
 | **Effect Type**     | **Description**                                          |
 |-----------------------------|-------------------------------------------|
@@ -485,7 +485,7 @@ library(plotly)
 generate_data <- function(n, correlation_target) {
   correlations <- replicate(n, {
     x <- rnorm(20, mean = 10, sd = 1)  # Variable indépendante
-    y <- correlation_target * x + rnorm(20, mean = 0, sd = sqrt(1 - correlation_target^2))  # Variable dépendante
+    y <- correlation_target * x + rnorm(10, mean = 0, sd = sqrt(1 - correlation_target^2))  # Variable dépendante
     cor(x, y)  # Calcul de la corrélation
   })
   
@@ -538,7 +538,8 @@ server <- function(input, output) {
             ylab("Densité") +
             theme_minimal() +
             scale_color_manual(name = "Légende", values = c("lightblue" = "Brutes", "red" = "Fisher", "green" = "Normale")) +
-            labs(color = "Type de Densité")
+            labs(color = "Type de Densité")+
+          xlim(-3,3)
         
         # Convertir ggplot en plotly
         ggplotly(p)
